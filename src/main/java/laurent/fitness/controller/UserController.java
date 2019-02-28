@@ -38,24 +38,32 @@ public class UserController {
 		@PostMapping("/adduser")
 		public ResponseEntity<?> addUser(@Valid String username, @Valid String fullname, @Valid String password, 
 				@Valid String email, @Valid String tel, @Valid String role) {
-			User user;
-			Authority authority;
+			User newUser;
+			Authority newAuthority;
+			int idMax = 0; // gestion de l'auto increment de idUser qui n'est pas une clé primaire
 			
-			Long userId;
+			
 
 			//BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 			
 			//userId =  (LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())/1000;
+
+			try {
+				User userIdMax = userRepo.findByUsernameIdMax();
+				idMax = userIdMax.getIdUser() + 1;
+			}
+			catch (Exception e) {
+				idMax=1;
+			}
+			finally {
+				System.out.println("idMax = " + idMax);
+				newUser = new User(idMax, username, fullname, password, 
+						email, tel, new Date(), (byte) 1);
+			}
 			
-			
-			user = new User(username, fullname, password, 
-					email, tel, new Date(), (byte) 1);
-			
-			authority = new Authority(username, role);
-			//authority.setUser(user);
-			authorityRepo.save(authority);
-			System.out.println("ggggggggg authorityRepo.save(authority); " + authorityRepo.save(authority));
-			userRepo.save(user);
+			newAuthority = new Authority(username, role);
+			authorityRepo.save(newAuthority);
+			userRepo.save(newUser);
 			
 			try {
 				//authoritiesRepo.save(authorities);

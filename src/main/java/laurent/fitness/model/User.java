@@ -68,6 +68,17 @@ public class User implements Serializable {
 		this.creationDate = creationDate;
 		this.enabled = enabled;
 	}
+	
+	public User(int idUser, String username, String fullname, String password, String email, String tel, Date creationDate, byte enabled) {
+		this.idUser = idUser;
+		this.username = username;
+		this.fullname = fullname;
+		this.password = password;
+		this.email = email;
+		this.tel = tel;
+		this.creationDate = creationDate;
+		this.enabled = enabled;
+	}
 
 	public String getUsername() {
 		return this.username;
