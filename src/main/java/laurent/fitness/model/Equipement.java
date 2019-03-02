@@ -23,14 +23,14 @@ public class Equipement implements Serializable {
 
 	private String timestamp;
 
-	//bi-directional many-to-one association to EquipementModel
-	@ManyToOne
-	@JoinColumn(name="EquipementModel_idEquipementModel")
-	private EquipementModel equipementModel;
-
 	//bi-directional many-to-one association to Room
+	@ManyToOne
+	@JoinColumn(name="Room_idRoom")
+	private Room room;
+
+	//bi-directional many-to-one association to EquipementModel
 	@OneToMany(mappedBy="equipement")
-	private List<Room> rooms;
+	private List<EquipementModel> equipementModels;
 
 	public Equipement() {
 	}
@@ -67,34 +67,34 @@ public class Equipement implements Serializable {
 		this.timestamp = timestamp;
 	}
 
-	public EquipementModel getEquipementModel() {
-		return this.equipementModel;
+	public Room getRoom() {
+		return this.room;
 	}
 
-	public void setEquipementModel(EquipementModel equipementModel) {
-		this.equipementModel = equipementModel;
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
-	public List<Room> getRooms() {
-		return this.rooms;
+	public List<EquipementModel> getEquipementModels() {
+		return this.equipementModels;
 	}
 
-	public void setRooms(List<Room> rooms) {
-		this.rooms = rooms;
+	public void setEquipementModels(List<EquipementModel> equipementModels) {
+		this.equipementModels = equipementModels;
 	}
 
-	public Room addRoom(Room room) {
-		getRooms().add(room);
-		room.setEquipement(this);
+	public EquipementModel addEquipementModel(EquipementModel equipementModel) {
+		getEquipementModels().add(equipementModel);
+		equipementModel.setEquipement(this);
 
-		return room;
+		return equipementModel;
 	}
 
-	public Room removeRoom(Room room) {
-		getRooms().remove(room);
-		room.setEquipement(null);
+	public EquipementModel removeEquipementModel(EquipementModel equipementModel) {
+		getEquipementModels().remove(equipementModel);
+		equipementModel.setEquipement(null);
 
-		return room;
+		return equipementModel;
 	}
 
 }

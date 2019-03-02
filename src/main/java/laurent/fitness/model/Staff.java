@@ -2,6 +2,8 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.Date;
 import java.util.List;
 
 
@@ -11,11 +13,8 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="Staff.findAll", query="SELECT s FROM Staff s")
-public class Staff implements Serializable {
+public class Staff extends User implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	private int idStaff;
 
 	private String dayWorking;
 
@@ -25,21 +24,26 @@ public class Staff implements Serializable {
 	@OneToMany(mappedBy="staff")
 	private List<SessionTraining> sessionTrainings;
 
-	//bi-directional many-to-one association to User
-	@ManyToOne
-	@JoinColumn(name="Users_username")
-	private User user;
 
 	public Staff() {
 	}
+	
+	public Staff(int idUser,
+			String username, 
+			String fullname, 
+			String password, 
+			String email, 
+			String tel,
+			Date dateOfRegistration, 
+			byte enabled,
+			String dayWorking,
+			String hourWorking) {
+	super(idUser,username, fullname, password, email, tel, dateOfRegistration, enabled);
+	this.idUser = idUser;
+	this.dayWorking = dayWorking;
+	this.hourWorking = hourWorking;
+}
 
-	public int getIdStaff() {
-		return this.idStaff;
-	}
-
-	public void setIdStaff(int idStaff) {
-		this.idStaff = idStaff;
-	}
 
 	public String getDayWorking() {
 		return this.dayWorking;
@@ -77,14 +81,6 @@ public class Staff implements Serializable {
 		sessionTraining.setStaff(null);
 
 		return sessionTraining;
-	}
-
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 }

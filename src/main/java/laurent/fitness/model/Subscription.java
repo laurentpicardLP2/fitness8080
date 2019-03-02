@@ -2,6 +2,7 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -14,54 +15,86 @@ public class Subscription implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idSubscription;
+	private int idSubscriptionType;
 
-	@Column(name="Users_username")
-	private String users_username;
+	private String last;
 
-	//bi-directional many-to-one association to Prestation
+	private String nameSubscription;
+
+	private float price;
+
+	//bi-directional many-to-one association to Purchase
+	@OneToMany(mappedBy="subscription")
+	private List<Purchase> purchases;
+
+	//bi-directional many-to-one association to Customer
 	@ManyToOne
-	@JoinColumn(name="Prestation_idPrestation")
-	private Prestation prestation;
-
-	//bi-directional many-to-one association to SubscriptionModel
-	@ManyToOne
-	@JoinColumn(name="SubscriptionModel_idSubscriptionType")
-	private SubscriptionModel subscriptionModel;
+	@JoinColumn(name="Customer_Users_username")
+	private Customer customer;
 
 	public Subscription() {
 	}
 
-	public int getIdSubscription() {
-		return this.idSubscription;
+	public int getIdSubscriptionType() {
+		return this.idSubscriptionType;
 	}
 
-	public void setIdSubscription(int idSubscription) {
-		this.idSubscription = idSubscription;
+	public void setIdSubscriptionType(int idSubscriptionType) {
+		this.idSubscriptionType = idSubscriptionType;
 	}
 
-	public String getUsers_username() {
-		return this.users_username;
+	public String getLast() {
+		return this.last;
 	}
 
-	public void setUsers_username(String users_username) {
-		this.users_username = users_username;
+	public void setLast(String last) {
+		this.last = last;
 	}
 
-	public Prestation getPrestation() {
-		return this.prestation;
+	public String getNameSubscription() {
+		return this.nameSubscription;
 	}
 
-	public void setPrestation(Prestation prestation) {
-		this.prestation = prestation;
+	public void setNameSubscription(String nameSubscription) {
+		this.nameSubscription = nameSubscription;
 	}
 
-	public SubscriptionModel getSubscriptionModel() {
-		return this.subscriptionModel;
+	public float getPrice() {
+		return this.price;
 	}
 
-	public void setSubscriptionModel(SubscriptionModel subscriptionModel) {
-		this.subscriptionModel = subscriptionModel;
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public List<Purchase> getPurchases() {
+		return this.purchases;
+	}
+
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
+
+	public Purchase addPurchas(Purchase purchas) {
+		getPurchases().add(purchas);
+		purchas.setSubscription(this);
+
+		return purchas;
+	}
+
+	public Purchase removePurchas(Purchase purchas) {
+		getPurchases().remove(purchas);
+		purchas.setSubscription(null);
+
+		return purchas;
+	}
+
+	public Customer getCustomer() {
+		return this.customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 }

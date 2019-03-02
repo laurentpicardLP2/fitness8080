@@ -3,6 +3,8 @@ package laurent.fitness.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the Authorities database table.
@@ -46,7 +48,8 @@ public class Authority implements Serializable {
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
-
+	
+	@JsonIgnore
 	public User getUser() {
 		return this.user;
 	}

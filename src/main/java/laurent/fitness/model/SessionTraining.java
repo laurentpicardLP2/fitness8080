@@ -17,15 +17,10 @@ public class SessionTraining implements Serializable {
 	@Id
 	private int idSessionTraining;
 
-	private int attendant;
+	private int capacityAttendant;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateTime;
-
-	//bi-directional many-to-one association to Prestation
-	@ManyToOne
-	@JoinColumn(name="Prestation_idPrestation")
-	private Prestation prestation;
 
 	//bi-directional many-to-one association to Room
 	@ManyToOne
@@ -34,7 +29,7 @@ public class SessionTraining implements Serializable {
 
 	//bi-directional many-to-one association to Staff
 	@ManyToOne
-	@JoinColumn(name="Staff_idStaff")
+	@JoinColumn(name="Staff_Users_username")
 	private Staff staff;
 
 	public SessionTraining() {
@@ -48,12 +43,12 @@ public class SessionTraining implements Serializable {
 		this.idSessionTraining = idSessionTraining;
 	}
 
-	public int getAttendant() {
-		return this.attendant;
+	public int getCapacityAttendant() {
+		return this.capacityAttendant;
 	}
 
-	public void setAttendant(int attendant) {
-		this.attendant = attendant;
+	public void setCapacityAttendant(int capacityAttendant) {
+		this.capacityAttendant = capacityAttendant;
 	}
 
 	public Date getDateTime() {
@@ -62,14 +57,6 @@ public class SessionTraining implements Serializable {
 
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
-	}
-
-	public Prestation getPrestation() {
-		return this.prestation;
-	}
-
-	public void setPrestation(Prestation prestation) {
-		this.prestation = prestation;
 	}
 
 	public Room getRoom() {

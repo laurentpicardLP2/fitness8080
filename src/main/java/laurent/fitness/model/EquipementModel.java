@@ -2,7 +2,6 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -24,8 +23,9 @@ public class EquipementModel implements Serializable {
 	private String quantity;
 
 	//bi-directional many-to-one association to Equipement
-	@OneToMany(mappedBy="equipementModel")
-	private List<Equipement> equipements;
+	@ManyToOne
+	@JoinColumn(name="Equipement_idEquipement")
+	private Equipement equipement;
 
 	public EquipementModel() {
 	}
@@ -62,26 +62,12 @@ public class EquipementModel implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public List<Equipement> getEquipements() {
-		return this.equipements;
+	public Equipement getEquipement() {
+		return this.equipement;
 	}
 
-	public void setEquipements(List<Equipement> equipements) {
-		this.equipements = equipements;
-	}
-
-	public Equipement addEquipement(Equipement equipement) {
-		getEquipements().add(equipement);
-		equipement.setEquipementModel(this);
-
-		return equipement;
-	}
-
-	public Equipement removeEquipement(Equipement equipement) {
-		getEquipements().remove(equipement);
-		equipement.setEquipementModel(null);
-
-		return equipement;
+	public void setEquipement(Equipement equipement) {
+		this.equipement = equipement;
 	}
 
 }

@@ -6,12 +6,12 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the Commande database table.
+ * The persistent class for the Command database table.
  * 
  */
 @Entity
-@NamedQuery(name="Commande.findAll", query="SELECT c FROM Commande c")
-public class Commande implements Serializable {
+@NamedQuery(name="Command.findAll", query="SELECT c FROM Command c")
+public class Command implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -22,7 +22,7 @@ public class Commande implements Serializable {
 
 	private float totalPrice;
 
-	public Commande() {
+	public Command() {
 	}
 
 	public int getIdCommande() {

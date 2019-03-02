@@ -1,14 +1,24 @@
 package laurent.fitness.repository;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import laurent.fitness.model.Customer;
 import laurent.fitness.model.User;
 
-public interface UserRepository extends JpaRepository<User, String>{
-//	User findByUsername(String username);
+public interface UserRepository extends JpaRepository<User, Integer>{
+	@Query("SELECT u FROM User u WHERE u.username LIKE %?1%")
+	User findByUsername(String username);
+	
 //    User getByUsersId(Long id);
-//    void deleteByUsername(String username);
+	
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM User u WHERE u.username LIKE %?1%")
+    void deleteByUsername(String username);
 	
 	@Query("SELECT u FROM User u WHERE u.idUser in (SELECT MAX(idUser) from User)")
 	 public User findByUsernameIdMax();

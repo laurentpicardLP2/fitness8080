@@ -20,9 +20,8 @@ public class Room implements Serializable {
 	private int capacity;
 
 	//bi-directional many-to-one association to Equipement
-	@ManyToOne
-	@JoinColumn(name="Equipement_idEquipement")
-	private Equipement equipement;
+	@OneToMany(mappedBy="room")
+	private List<Equipement> equipements;
 
 	//bi-directional many-to-one association to SessionTraining
 	@OneToMany(mappedBy="room")
@@ -47,12 +46,26 @@ public class Room implements Serializable {
 		this.capacity = capacity;
 	}
 
-	public Equipement getEquipement() {
-		return this.equipement;
+	public List<Equipement> getEquipements() {
+		return this.equipements;
 	}
 
-	public void setEquipement(Equipement equipement) {
-		this.equipement = equipement;
+	public void setEquipements(List<Equipement> equipements) {
+		this.equipements = equipements;
+	}
+
+	public Equipement addEquipement(Equipement equipement) {
+		getEquipements().add(equipement);
+		equipement.setRoom(this);
+
+		return equipement;
+	}
+
+	public Equipement removeEquipement(Equipement equipement) {
+		getEquipements().remove(equipement);
+		equipement.setRoom(null);
+
+		return equipement;
 	}
 
 	public List<SessionTraining> getSessionTrainings() {

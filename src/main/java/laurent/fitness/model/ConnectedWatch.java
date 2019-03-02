@@ -2,6 +2,8 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
+import laurent.fitness.model.Purchase;
 
 
 /**
@@ -16,23 +18,18 @@ public class ConnectedWatch implements Serializable {
 	@Id
 	private int idConnectedWatch;
 
-	@Column(name="Users_username")
-	private String users_username;
+	private String modelWatch;
 
-	//bi-directional many-to-one association to ConnectedWatchModel
-	@ManyToOne
-	@JoinColumn(name="ConnectedWatchModel_idConnectedWatchModel")
-	private ConnectedWatchModel connectedWatchModel;
+	private float price;
 
 	//bi-directional many-to-one association to Customer
 	@ManyToOne
-	@JoinColumn(name="Customer_idCustomer")
+	@JoinColumn(name="Customer_Users_username")
 	private Customer customer;
 
-	//bi-directional many-to-one association to Prestation
-	@ManyToOne
-	@JoinColumn(name="Prestation_idPrestation")
-	private Prestation prestation;
+	//bi-directional many-to-one association to Purchase
+	@OneToMany(mappedBy="connectedWatch")
+	private List<Purchase> purchases;
 
 	public ConnectedWatch() {
 	}
@@ -45,20 +42,20 @@ public class ConnectedWatch implements Serializable {
 		this.idConnectedWatch = idConnectedWatch;
 	}
 
-	public String getUsers_username() {
-		return this.users_username;
+	public String getModelWatch() {
+		return this.modelWatch;
 	}
 
-	public void setUsers_username(String users_username) {
-		this.users_username = users_username;
+	public void setModelWatch(String modelWatch) {
+		this.modelWatch = modelWatch;
 	}
 
-	public ConnectedWatchModel getConnectedWatchModel() {
-		return this.connectedWatchModel;
+	public float getPrice() {
+		return this.price;
 	}
 
-	public void setConnectedWatchModel(ConnectedWatchModel connectedWatchModel) {
-		this.connectedWatchModel = connectedWatchModel;
+	public void setPrice(float price) {
+		this.price = price;
 	}
 
 	public Customer getCustomer() {
@@ -69,12 +66,26 @@ public class ConnectedWatch implements Serializable {
 		this.customer = customer;
 	}
 
-	public Prestation getPrestation() {
-		return this.prestation;
+	public List<Purchase> getPurchases() {
+		return this.purchases;
 	}
 
-	public void setPrestation(Prestation prestation) {
-		this.prestation = prestation;
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
+
+	public Purchase addPurchas(Purchase purchas) {
+		getPurchases().add(purchas);
+		purchas.setConnectedWatch(this);
+
+		return purchas;
+	}
+
+	public Purchase removePurchas(Purchase purchas) {
+		getPurchases().remove(purchas);
+		purchas.setConnectedWatch(null);
+
+		return purchas;
 	}
 
 }

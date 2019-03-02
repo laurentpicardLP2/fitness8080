@@ -4,6 +4,9 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +16,7 @@ import java.util.List;
  * 
  */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="Users")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
@@ -22,61 +26,45 @@ public class User implements Serializable {
 	@Id
 	@Column(unique=true)
 	@NotBlank(message = "Login ne doit pas être vide")
-	private String username;
+	protected String username;
 	
-	private int idUser;
+	@Column(unique=true)
+	protected int idUser;
 
-	private String fullname;
+	protected String fullname;
 
-	private String password;
+	protected String password;
 	
-	private String email;
+	protected String email;
 
-	private String tel;
+	protected String tel;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationDate;
+	@Temporal(TemporalType.DATE)
+	protected Date dateOfRegistration;
 	
-	private byte enabled;
+	protected byte enabled;
 	
-	//bi-directional many-to-one association to Customer
+	//bi-directional many-to-one association to Purchase
 	@OneToMany(mappedBy="user")
-	private List<Customer> customers;
+	private List<Purchase> purchases;
 
-	//bi-directional many-to-one association to Prestation
-	@OneToMany(mappedBy="user")
-	private List<Prestation> prestations;
-
-	//bi-directional many-to-one association to Staff
-	@OneToMany(mappedBy="user")
-	private List<Staff> staffs;
 
 	//bi-directional one-to-one association to Authority
-	@OneToOne
+	@OneToOne(optional=true, cascade=CascadeType.REMOVE)
 	@JoinColumn(name="username")
-	private Authority authority;
+	protected Authority authority;
 
 	public User() {
 	}
 	
-	public User(String username, String fullname, String password, String email, String tel, Date creationDate, byte enabled) {
-		this.username = username;
-		this.fullname = fullname;
-		this.password = password;
-		this.email = email;
-		this.tel = tel;
-		this.creationDate = creationDate;
-		this.enabled = enabled;
-	}
-	
-	public User(int idUser, String username, String fullname, String password, String email, String tel, Date creationDate, byte enabled) {
+	public User(int idUser, String username, String fullname, String password, String email, String tel, Date dateOfRegistration, byte enabled) {
 		this.idUser = idUser;
 		this.username = username;
 		this.fullname = fullname;
 		this.password = password;
 		this.email = email;
 		this.tel = tel;
-		this.creationDate = creationDate;
+		this.dateOfRegistration = dateOfRegistration;
 		this.enabled = enabled;
 	}
 
@@ -88,12 +76,12 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public Date getCreationDate() {
-		return this.creationDate;
+	public Date getDateOfRegistration() {
+		return this.dateOfRegistration;
 	}
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+	public void setDateOfRegistration(Date dateOfRegistration) {
+		this.dateOfRegistration = dateOfRegistration;
 	}
 
 	public String getEmail() {
@@ -144,70 +132,26 @@ public class User implements Serializable {
 		this.tel = tel;
 	}
 
-	public List<Customer> getCustomers() {
-		return this.customers;
+	public List<Purchase> getPurchases() {
+		return this.purchases;
 	}
 
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
 	}
 
-	public Customer addCustomer(Customer customer) {
-		getCustomers().add(customer);
-		customer.setUser(this);
+	public Purchase addPurchas(Purchase purchas) {
+		getPurchases().add(purchas);
+		purchas.setUser(this);
 
-		return customer;
+		return purchas;
 	}
 
-	public Customer removeCustomer(Customer customer) {
-		getCustomers().remove(customer);
-		customer.setUser(null);
+	public Purchase removePurchas(Purchase purchas) {
+		getPurchases().remove(purchas);
+		purchas.setUser(null);
 
-		return customer;
-	}
-
-	public List<Prestation> getPrestations() {
-		return this.prestations;
-	}
-
-	public void setPrestations(List<Prestation> prestations) {
-		this.prestations = prestations;
-	}
-
-	public Prestation addPrestation(Prestation prestation) {
-		getPrestations().add(prestation);
-		prestation.setUser(this);
-
-		return prestation;
-	}
-
-	public Prestation removePrestation(Prestation prestation) {
-		getPrestations().remove(prestation);
-		prestation.setUser(null);
-
-		return prestation;
-	}
-
-	public List<Staff> getStaffs() {
-		return this.staffs;
-	}
-
-	public void setStaffs(List<Staff> staffs) {
-		this.staffs = staffs;
-	}
-
-	public Staff addStaff(Staff staff) {
-		getStaffs().add(staff);
-		staff.setUser(this);
-
-		return staff;
-	}
-
-	public Staff removeStaff(Staff staff) {
-		getStaffs().remove(staff);
-		staff.setUser(null);
-
-		return staff;
+		return purchas;
 	}
 
 	public Authority getAuthority() {
@@ -217,5 +161,6 @@ public class User implements Serializable {
 	public void setAuthority(Authority authority) {
 		this.authority = authority;
 	}
+
 
 }

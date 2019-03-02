@@ -16,10 +16,15 @@ public class Seance implements Serializable {
 	@Id
 	private int idSeance;
 
-	//bi-directional many-to-one association to Prestation
+	//bi-directional many-to-one association to Customer
 	@ManyToOne
-	@JoinColumn(name="Prestation_idPrestation")
-	private Prestation prestation;
+	@JoinColumn(name="Customer_Users_username")
+	private Customer customer;
+
+	//bi-directional many-to-one association to Purchase
+	@ManyToOne
+	@JoinColumn(name="Purchase_idPrestation")
+	private Purchase purchase;
 
 	public Seance() {
 	}
@@ -32,12 +37,20 @@ public class Seance implements Serializable {
 		this.idSeance = idSeance;
 	}
 
-	public Prestation getPrestation() {
-		return this.prestation;
+	public Customer getCustomer() {
+		return this.customer;
 	}
 
-	public void setPrestation(Prestation prestation) {
-		this.prestation = prestation;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Purchase getPurchase() {
+		return this.purchase;
+	}
+
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
 	}
 
 }
