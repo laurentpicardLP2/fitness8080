@@ -42,6 +42,23 @@ public class Purchase implements Serializable {
 	@OneToMany(mappedBy="purchase")
 	private List<Seance> seances;
 
+	//bi-directional many-to-many association to Command
+	@ManyToMany
+	@JoinTable(
+		name="Purchase_has_Command"
+		, joinColumns={
+			@JoinColumn(name="Purchase_idPrestation")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Command_idCommande")
+			}
+		)
+	private List<Command> commands;
+
+	//bi-directional many-to-many association to SessionTraining
+	@ManyToMany(mappedBy="purchases")
+	private List<SessionTraining> sessionTrainings;
+
 	public Purchase() {
 	}
 
@@ -113,6 +130,22 @@ public class Purchase implements Serializable {
 		seance.setPurchase(null);
 
 		return seance;
+	}
+
+	public List<Command> getCommands() {
+		return this.commands;
+	}
+
+	public void setCommands(List<Command> commands) {
+		this.commands = commands;
+	}
+
+	public List<SessionTraining> getSessionTrainings() {
+		return this.sessionTrainings;
+	}
+
+	public void setSessionTrainings(List<SessionTraining> sessionTrainings) {
+		this.sessionTrainings = sessionTrainings;
 	}
 
 }

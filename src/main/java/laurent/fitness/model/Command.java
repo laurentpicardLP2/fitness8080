@@ -3,6 +3,7 @@ package laurent.fitness.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -21,6 +22,10 @@ public class Command implements Serializable {
 	private Date dateTime;
 
 	private float totalPrice;
+
+	//bi-directional many-to-many association to Purchase
+	@ManyToMany(mappedBy="commands")
+	private List<Purchase> purchases;
 
 	public Command() {
 	}
@@ -47,6 +52,14 @@ public class Command implements Serializable {
 
 	public void setTotalPrice(float totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	public List<Purchase> getPurchases() {
+		return this.purchases;
+	}
+
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
 	}
 
 }

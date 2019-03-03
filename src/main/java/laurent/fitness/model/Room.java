@@ -15,19 +15,27 @@ public class Room implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idRoom;
 
 	private int capacity;
 
-	//bi-directional many-to-one association to Equipement
+	private String roomName;
+
+	//bi-directional many-to-one association to Material
 	@OneToMany(mappedBy="room")
-	private List<Equipement> equipements;
+	private List<Material> materials;
 
 	//bi-directional many-to-one association to SessionTraining
 	@OneToMany(mappedBy="room")
 	private List<SessionTraining> sessionTrainings;
 
 	public Room() {
+	}
+	
+	public Room(String roomName, int capacity) {
+		this.roomName = roomName;
+		this.capacity = capacity;
 	}
 
 	public int getIdRoom() {
@@ -46,26 +54,34 @@ public class Room implements Serializable {
 		this.capacity = capacity;
 	}
 
-	public List<Equipement> getEquipements() {
-		return this.equipements;
+	public String getRoomName() {
+		return this.roomName;
 	}
 
-	public void setEquipements(List<Equipement> equipements) {
-		this.equipements = equipements;
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
 	}
 
-	public Equipement addEquipement(Equipement equipement) {
-		getEquipements().add(equipement);
-		equipement.setRoom(this);
-
-		return equipement;
+	public List<Material> getMaterials() {
+		return this.materials;
 	}
 
-	public Equipement removeEquipement(Equipement equipement) {
-		getEquipements().remove(equipement);
-		equipement.setRoom(null);
+	public void setMaterials(List<Material> materials) {
+		this.materials = materials;
+	}
 
-		return equipement;
+	public Material addMaterial(Material material) {
+		getMaterials().add(material);
+		material.setRoom(this);
+
+		return material;
+	}
+
+	public Material removeMaterial(Material material) {
+		getMaterials().remove(material);
+		material.setRoom(null);
+
+		return material;
 	}
 
 	public List<SessionTraining> getSessionTrainings() {

@@ -74,7 +74,7 @@ public class UserController {
 		
 	
 	
-	@PostMapping("/addstaff/{role}")
+	@PostMapping("/newstaff/{role}")
 	public ResponseEntity<?> addStaff(@PathVariable String role) {			
 		return ResponseEntity.status(HttpStatus.OK).body(null);		
 	}

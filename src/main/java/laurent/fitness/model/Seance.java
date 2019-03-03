@@ -2,6 +2,7 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -25,6 +26,19 @@ public class Seance implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="Purchase_idPrestation")
 	private Purchase purchase;
+
+	//bi-directional many-to-many association to Material
+	@ManyToMany
+	@JoinTable(
+		name="Seance_has_Material"
+		, joinColumns={
+			@JoinColumn(name="Seance_idSeance")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Material_idMaterial")
+			}
+		)
+	private List<Material> materials;
 
 	public Seance() {
 	}
@@ -51,6 +65,14 @@ public class Seance implements Serializable {
 
 	public void setPurchase(Purchase purchase) {
 		this.purchase = purchase;
+	}
+
+	public List<Material> getMaterials() {
+		return this.materials;
+	}
+
+	public void setMaterials(List<Material> materials) {
+		this.materials = materials;
 	}
 
 }

@@ -1,10 +1,7 @@
 package laurent.fitness.services;
 
-import java.util.Date;
+
 import java.util.List;
-
-import javax.validation.Valid;
-
 import laurent.fitness.model.User;
 
 public interface UserService {

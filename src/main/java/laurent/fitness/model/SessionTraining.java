@@ -3,6 +3,7 @@ package laurent.fitness.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -31,6 +32,32 @@ public class SessionTraining implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="Staff_Users_username")
 	private Staff staff;
+
+	//bi-directional many-to-many association to Purchase
+	@ManyToMany
+	@JoinTable(
+		name="Purchase_has_SessionTraining"
+		, joinColumns={
+			@JoinColumn(name="SessionTraining_idSessionTraining")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Purchase_idPrestation")
+			}
+		)
+	private List<Purchase> purchases;
+
+	//bi-directional many-to-many association to Customer
+	@ManyToMany
+	@JoinTable(
+		name="SessionTraining_has_Customer"
+		, joinColumns={
+			@JoinColumn(name="SessionTraining_idSessionTraining")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Customer_Users_username")
+			}
+		)
+	private List<Customer> customers;
 
 	public SessionTraining() {
 	}
@@ -73,6 +100,22 @@ public class SessionTraining implements Serializable {
 
 	public void setStaff(Staff staff) {
 		this.staff = staff;
+	}
+
+	public List<Purchase> getPurchases() {
+		return this.purchases;
+	}
+
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
+
+	public List<Customer> getCustomers() {
+		return this.customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
 	}
 
 }
