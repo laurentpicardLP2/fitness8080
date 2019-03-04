@@ -27,18 +27,9 @@ public class Seance implements Serializable {
 	@JoinColumn(name="Purchase_idPrestation")
 	private Purchase purchase;
 
-	//bi-directional many-to-many association to Material
-	@ManyToMany
-	@JoinTable(
-		name="Seance_has_Material"
-		, joinColumns={
-			@JoinColumn(name="Seance_idSeance")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="Material_idMaterial")
-			}
-		)
-	private List<Material> materials;
+	//bi-directional many-to-many association to TimestampFacility
+	@ManyToMany(mappedBy="seances")
+	private List<TimestampFacility> timestampFacilities;
 
 	public Seance() {
 	}
@@ -67,12 +58,12 @@ public class Seance implements Serializable {
 		this.purchase = purchase;
 	}
 
-	public List<Material> getMaterials() {
-		return this.materials;
+	public List<TimestampFacility> getTimestampFacilities() {
+		return this.timestampFacilities;
 	}
 
-	public void setMaterials(List<Material> materials) {
-		this.materials = materials;
+	public void setTimestampFacilities(List<TimestampFacility> timestampFacilities) {
+		this.timestampFacilities = timestampFacilities;
 	}
 
 }

@@ -20,6 +20,8 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query("DELETE FROM User u WHERE u.username LIKE %?1%")
     void deleteByUsername(String username);
 	
+	
+	//@Query(value = "SELECT MAX(idUser) from User", nativeQuery = true)
 	@Query("SELECT u FROM User u WHERE u.idUser in (SELECT MAX(idUser) from User)")
 	 public User findByUsernameIdMax();
 }

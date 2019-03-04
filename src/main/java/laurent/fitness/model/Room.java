@@ -22,9 +22,9 @@ public class Room implements Serializable {
 
 	private String roomName;
 
-	//bi-directional many-to-one association to Material
+	//bi-directional many-to-one association to Facility
 	@OneToMany(mappedBy="room")
-	private List<Material> materials;
+	private List<Facility> facilities;
 
 	//bi-directional many-to-one association to SessionTraining
 	@OneToMany(mappedBy="room")
@@ -62,26 +62,26 @@ public class Room implements Serializable {
 		this.roomName = roomName;
 	}
 
-	public List<Material> getMaterials() {
-		return this.materials;
+	public List<Facility> getFacilities() {
+		return this.facilities;
 	}
 
-	public void setMaterials(List<Material> materials) {
-		this.materials = materials;
+	public void setFacilities(List<Facility> facilities) {
+		this.facilities = facilities;
 	}
 
-	public Material addMaterial(Material material) {
-		getMaterials().add(material);
-		material.setRoom(this);
+	public Facility addFacility(Facility facility) {
+		getFacilities().add(facility);
+		facility.setRoom(this);
 
-		return material;
+		return facility;
 	}
 
-	public Material removeMaterial(Material material) {
-		getMaterials().remove(material);
-		material.setRoom(null);
+	public Facility removeFacility(Facility facility) {
+		getFacilities().remove(facility);
+		facility.setRoom(null);
 
-		return material;
+		return facility;
 	}
 
 	public List<SessionTraining> getSessionTrainings() {
