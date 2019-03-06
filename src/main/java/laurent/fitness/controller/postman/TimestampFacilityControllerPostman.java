@@ -23,9 +23,12 @@ public class TimestampFacilityControllerPostman {
 	
 	//Add a new timestampFacility
 	@PostMapping("/addtimestampfacility")
-	public ResponseEntity<?> addTimestampFacility(@Valid String refTimestamp, @Valid String facilityName) {
+	public ResponseEntity<?> addTimestampFacility(
+				@Valid String refTimestamp, 
+				@Valid String facilityName, 
+				@Valid String facilityCategoryName) {
 		try {
-			this.timestampFacilityService.saveNewTimestampFacility(refTimestamp, facilityName);
+			this.timestampFacilityService.saveNewTimestampFacility(refTimestamp, facilityName, facilityCategoryName);
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 		
 		} catch(Exception e) {

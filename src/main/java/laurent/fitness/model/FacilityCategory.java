@@ -32,6 +32,11 @@ public class FacilityCategory implements Serializable {
 	//bi-directional many-to-one association to Facility
 	@OneToMany(mappedBy="facilityCategory")
 	private List<Facility> facilities;
+	
+	//bi-directional many-to-one association to TimestampFacility
+	@OneToMany(mappedBy="facilityCategory")
+	private List<TimestampFacility> timestampFacilities;
+
 
 	public FacilityCategory() {
 	}
@@ -123,5 +128,28 @@ public class FacilityCategory implements Serializable {
 
 		return facility;
 	}
+	
+	public List<TimestampFacility> getTimestampFacilities() {
+		return this.timestampFacilities;
+	}
+
+	public void setTimestampFacilities(List<TimestampFacility> timestampFacilities) {
+		this.timestampFacilities = timestampFacilities;
+	}
+
+	public TimestampFacility addTimestampFacility(TimestampFacility timestampFacility) {
+		getTimestampFacilities().add(timestampFacility);
+		timestampFacility.setFacilityCategory(this);
+
+		return timestampFacility;
+	}
+
+	public TimestampFacility removeTimestampFacility(TimestampFacility timestampFacility) {
+		getTimestampFacilities().remove(timestampFacility);
+		timestampFacility.setFacilityCategory(null);
+
+		return timestampFacility;
+	}
+
 
 }

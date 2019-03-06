@@ -15,6 +15,7 @@ public class Seance implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idSeance;
 
 	//bi-directional many-to-one association to Customer
@@ -27,8 +28,8 @@ public class Seance implements Serializable {
 	@JoinColumn(name="Purchase_idPrestation")
 	private Purchase purchase;
 
-	//bi-directional many-to-many association to TimestampFacility
-	@ManyToMany(mappedBy="seances")
+	//bi-directional many-to-one association to TimestampFacility
+	@OneToMany(mappedBy="seance")
 	private List<TimestampFacility> timestampFacilities;
 
 	public Seance() {
@@ -64,6 +65,20 @@ public class Seance implements Serializable {
 
 	public void setTimestampFacilities(List<TimestampFacility> timestampFacilities) {
 		this.timestampFacilities = timestampFacilities;
+	}
+
+	public TimestampFacility addTimestampFacility(TimestampFacility timestampFacility) {
+		getTimestampFacilities().add(timestampFacility);
+		timestampFacility.setSeance(this);
+
+		return timestampFacility;
+	}
+
+	public TimestampFacility removeTimestampFacility(TimestampFacility timestampFacility) {
+		getTimestampFacilities().remove(timestampFacility);
+		timestampFacility.setSeance(null);
+
+		return timestampFacility;
 	}
 
 }

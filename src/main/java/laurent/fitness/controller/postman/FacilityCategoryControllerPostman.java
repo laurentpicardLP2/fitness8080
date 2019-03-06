@@ -47,12 +47,7 @@ private FacilityCategoryService facilityCategoryService;
 				@Valid String description,
 				@Valid String image){
 			try {
-				FacilityCategory facilityCategoryToUpdate = this.facilityCategoryService.findByFacilityCategoryName(facilityCategoryName);
-				facilityCategoryToUpdate.setQuantity(Integer.parseInt(quantity));
-				facilityCategoryToUpdate.setPrice(Float.parseFloat(price));
-				facilityCategoryToUpdate.setDescription(description);
-				facilityCategoryToUpdate.setImage(image);
-				this.facilityCategoryService.saveFacilityCategory(facilityCategoryToUpdate);
+				this.facilityCategoryService.updateFacilityCategory(facilityCategoryName, quantity, price, description, image);
 				return ResponseEntity.status(HttpStatus.OK).body(null);
 			} catch(Exception e) {
 				System.out.println(e);

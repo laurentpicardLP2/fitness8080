@@ -12,5 +12,8 @@ public interface FacilityCategoryService {
 	public void deleteFacilityCategory(FacilityCategory facilityCategory);
 	
 	public FacilityCategory findByFacilityCategoryName(String facilityCategoryName);
+	
+	public FacilityCategory updateFacilityCategory(String facilityCategoryName, String quantity, 
+			String price, String description, String image);
 
 }

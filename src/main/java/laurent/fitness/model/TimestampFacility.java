@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.util.List;
 
 
+
 /**
  * The persistent class for the TimestampFacility database table.
  * 
@@ -15,35 +16,36 @@ public class TimestampFacility implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	private int idTimestampFacillity;
 
 	private String refTimestamp;
 
-	//bi-directional many-to-many association to Seance
-	@ManyToMany
-	@JoinTable(
-		name="Seance_has_TimestampFacility"
-		, joinColumns={
-			@JoinColumn(name="TimestampFacility_idTimestampFacillity")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="Seance_idSeance")
-			}
-		)
-	private List<Seance> seances;
+	private int statusBooking;
 
 	//bi-directional many-to-one association to Facility
 	@ManyToOne
 	@JoinColumn(name="Facility_idFacility")
 	private Facility facility;
+	
+	//bi-directional many-to-one association to FacilityCategory
+	@ManyToOne
+	@JoinColumn(name="FacilityCategory_idFacilityCategory")
+	private FacilityCategory facilityCategory;
+
+
+	//bi-directional many-to-one association to Seance
+	@ManyToOne
+	@JoinColumn(name="Seance_idSeance")
+	private Seance seance;
 
 	public TimestampFacility() {
 	}
-	
-	public TimestampFacility(String refTimestamp, Facility facility) {
+
+    public TimestampFacility(String refTimestamp, Facility facility, FacilityCategory facilityCategory) {
 		this.refTimestamp = refTimestamp;
 		this.facility = facility;
+		this.facilityCategory = facilityCategory;
 	}
 
 	public int getIdTimestampFacillity() {
@@ -62,12 +64,12 @@ public class TimestampFacility implements Serializable {
 		this.refTimestamp = refTimestamp;
 	}
 
-	public List<Seance> getSeances() {
-		return this.seances;
+	public int getStatusBooking() {
+		return this.statusBooking;
 	}
 
-	public void setSeances(List<Seance> seances) {
-		this.seances = seances;
+	public void setStatusBooking(int statusBooking) {
+		this.statusBooking = statusBooking;
 	}
 
 	public Facility getFacility() {
@@ -76,6 +78,23 @@ public class TimestampFacility implements Serializable {
 
 	public void setFacility(Facility facility) {
 		this.facility = facility;
+	}
+	
+	public FacilityCategory getFacilityCategory() {
+		return this.facilityCategory;
+	}
+
+	public void setFacilityCategory(FacilityCategory facilityCategory) {
+		this.facilityCategory = facilityCategory;
+	}
+
+
+	public Seance getSeance() {
+		return this.seance;
+	}
+
+	public void setSeance(Seance seance) {
+		this.seance = seance;
 	}
 
 }

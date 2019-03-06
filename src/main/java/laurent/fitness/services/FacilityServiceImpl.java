@@ -54,9 +54,18 @@ public class FacilityServiceImpl implements FacilityService {
 	}
 
 	@Override
-	public Facility saveCategory(Facility facility) {
+	public Facility saveFacility(Facility facility) {
 		// TODO Auto-generated method stub
 		return this.facilityRepo.save(facility);
+	}
+
+	@Override
+	public Facility updateFacility(String facilityName, String roomName) {
+		// TODO Auto-generated method stub
+		Facility facilityToUpdate = this.facilityRepo.findByFacilityName(facilityName);
+		Room room = this.roomRepo.findByRoomName(roomName);
+		facilityToUpdate.setRoom(room);
+		return this.facilityRepo.save(facilityToUpdate);
 	}
 
 }

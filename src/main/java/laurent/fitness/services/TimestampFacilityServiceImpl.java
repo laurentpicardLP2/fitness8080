@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import laurent.fitness.model.Facility;
+import laurent.fitness.model.FacilityCategory;
 import laurent.fitness.model.TimestampFacility;
+import laurent.fitness.repository.FacilityCategoryRepository;
 import laurent.fitness.repository.FacilityRepository;
 import laurent.fitness.repository.TimestampFacilityRepository;
 
@@ -14,10 +16,15 @@ public class TimestampFacilityServiceImpl implements TimestampFacilityService {
 	
 	private TimestampFacilityRepository timestampFacilityRepo;
 	private FacilityRepository facilityRepo;
+	private FacilityCategoryRepository facilityCategoryRepo;
 	
-	public TimestampFacilityServiceImpl(TimestampFacilityRepository timestampFacilityRepo, FacilityRepository facilityRepo) {
+	public TimestampFacilityServiceImpl(
+			TimestampFacilityRepository timestampFacilityRepo, 
+			FacilityRepository facilityRepo, 
+			FacilityCategoryRepository facilityCategoryRepo) {
 		this.timestampFacilityRepo = timestampFacilityRepo;
 		this.facilityRepo = facilityRepo;
+		this.facilityCategoryRepo = facilityCategoryRepo;
 	}
 
 	@Override
@@ -27,10 +34,11 @@ public class TimestampFacilityServiceImpl implements TimestampFacilityService {
 	}
 
 	@Override
-	public TimestampFacility saveNewTimestampFacility(String refTimestamp, String facilityName) {
+	public TimestampFacility saveNewTimestampFacility(String refTimestamp, String facilityName, String facilityCategoryName) {
 		// TODO Auto-generated method stub
 		Facility facility = this.facilityRepo.findByFacilityName(facilityName);
-		TimestampFacility timestampFacility = new TimestampFacility(refTimestamp, facility);
+		FacilityCategory facilityCategory = this.facilityCategoryRepo.findByFacilityCategoryName(facilityCategoryName);
+		TimestampFacility timestampFacility = new TimestampFacility(refTimestamp, facility, facilityCategory);
 		return this.timestampFacilityRepo.save(timestampFacility);
 	}
 

@@ -8,7 +8,9 @@ public interface FacilityService {
 	
 	public Facility saveNewFacility(String facilityName, String roomName, String facilityCategoryName);
 	
-	public Facility saveCategory(Facility facility);
+	public Facility saveFacility(Facility facility);
+	
+	public Facility updateFacility(String facilityName, String roomName);
 	
 	public void deleteFacility(Facility facility);
 	
