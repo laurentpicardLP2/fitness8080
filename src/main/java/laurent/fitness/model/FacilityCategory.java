@@ -2,6 +2,9 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -107,6 +110,7 @@ public class FacilityCategory implements Serializable {
 		this.quantity = quantity;
 	}
 
+	@JsonIgnore
 	public List<Facility> getFacilities() {
 		return this.facilities;
 	}
@@ -129,6 +133,7 @@ public class FacilityCategory implements Serializable {
 		return facility;
 	}
 	
+	@JsonIgnore
 	public List<TimestampFacility> getTimestampFacilities() {
 		return this.timestampFacilities;
 	}

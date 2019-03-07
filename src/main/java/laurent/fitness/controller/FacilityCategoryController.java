@@ -1,12 +1,14 @@
-package laurent.fitness.controller.postman;
+package laurent.fitness.controller;
 
 import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,43 +16,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 import laurent.fitness.model.FacilityCategory;
 import laurent.fitness.services.FacilityCategoryService;
+import laurent.fitness.services.TimestampFacilityService;
 
 @RestController
-@RequestMapping("/postman/facilitycategoryctrl")
-public class FacilityCategoryControllerPostman {
+@RequestMapping("/facilitycategoryctrl")
+@CrossOrigin("http://localhost:4200")
+public class FacilityCategoryController {
 private FacilityCategoryService facilityCategoryService;
+private TimestampFacilityService timestampFacilityService;
 	
-	public FacilityCategoryControllerPostman(FacilityCategoryService facilityCategoryService) {
+	public FacilityCategoryController(
+			FacilityCategoryService facilityCategoryService,
+			TimestampFacilityService timestampFacilityService
+			) {
 		this.facilityCategoryService = facilityCategoryService;
+		this.timestampFacilityService = timestampFacilityService;
 	}
 	
-	//Return the list of category facilities
-	@GetMapping("/getfacilitycategories")
-	public ResponseEntity<?> getFacilityCategories() {
-		List<FacilityCategory> listeFacilityCategories = null;
-		
+	//Return the list if categories facilities
+	@GetMapping("/getfacilitycategories/{timestamp}")
+	public ResponseEntity<?> getFacilityCategories(@PathVariable String timestamp) {
+		List<FacilityCategory> listeFacilityCategoriesAvailable = null;
+	
 		try {
-			//listeFacilityCategories = this.facilityCategoryService.getAllFacilityCategories();			
+			listeFacilityCategoriesAvailable = this.facilityCategoryService.getFacilitiesAvailable(timestamp);			
 
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(listeFacilityCategories);
+		return ResponseEntity.status(HttpStatus.OK).body(listeFacilityCategoriesAvailable);
 	}
-	
-	//Return the list of available facilities for a category and a timestamp
-		@GetMapping("/getavailablefacilites")
-		public ResponseEntity<?> getFacilitiesAvailable() {
-			List<FacilityCategory> listeFacilityCategories = null;
-
-			try {
-				//listeFacilityCategories = this.facilityCategoryService.getAllFacilityCategories();			
-
-			} catch (Exception e) {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-			}
-			return ResponseEntity.status(HttpStatus.OK).body(listeFacilityCategories);
-		}
 	
 	//Add a new category of facility
 	@PostMapping("/addfacilitycategory")
@@ -96,3 +91,4 @@ private FacilityCategoryService facilityCategoryService;
 			}
 		}
 }
+

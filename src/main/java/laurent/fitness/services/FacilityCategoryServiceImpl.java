@@ -6,20 +6,29 @@ import org.springframework.stereotype.Service;
 
 import laurent.fitness.model.FacilityCategory;
 import laurent.fitness.repository.FacilityCategoryRepository;
+import laurent.fitness.repository.TimestampFacilityRepository;
 
 @Service
 public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 	
 	private FacilityCategoryRepository facilityCategoryRepo;
+	private TimestampFacilityRepository timestampFacilityRepo;
 
-    public FacilityCategoryServiceImpl(FacilityCategoryRepository facilityCategoryRepo) {
+    public FacilityCategoryServiceImpl(FacilityCategoryRepository facilityCategoryRepo, TimestampFacilityRepository timestampFacilityRepo) {
         this.facilityCategoryRepo = facilityCategoryRepo;
+        this.timestampFacilityRepo = timestampFacilityRepo;
     }
 
 	@Override
-	public List<FacilityCategory> getAllFacilityCategories() {
+	public List<FacilityCategory> getFacilitiesAvailable(String timestamp) {
 		// TODO Auto-generated method stub
-		return this.facilityCategoryRepo.findAll();
+		int availableFacilities;
+		List<FacilityCategory> availableFacilityCategories = this.facilityCategoryRepo.findAll();
+		for (int i=0; i<availableFacilityCategories.size(); i++) {
+			availableFacilities = this.timestampFacilityRepo.findByFacilityCategoryCount(availableFacilityCategories.get(i).getFacilityCategoryName(), timestamp);
+			availableFacilityCategories.get(i).setQuantity(availableFacilities);
+		}
+		return availableFacilityCategories;
 	}
 
 	@Override

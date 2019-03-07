@@ -55,9 +55,9 @@ public class TimestampFacilityServiceImpl implements TimestampFacilityService {
 	}
 
 	@Override
-	public int findByFacilityCategoryCount(String facilityName, String refTimestamp) {
+	public int findByFacilityCategoryCount(String facilityCategoryName, String timestamp) {
 		// TODO Auto-generated method stub
-		return this.timestampFacilityRepo.findByFacilityCategoryCount(facilityName, refTimestamp);
+		return this.timestampFacilityRepo.findByFacilityCategoryCount(facilityCategoryName, timestamp);
 	}
 
 }
