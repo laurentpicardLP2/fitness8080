@@ -1,8 +1,11 @@
 package laurent.fitness.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import laurent.fitness.model.Facility;
 import laurent.fitness.model.TimestampFacility;
 
 public interface TimestampFacilityRepository extends JpaRepository <TimestampFacility, Integer> {
@@ -23,11 +26,6 @@ public interface TimestampFacilityRepository extends JpaRepository <TimestampFac
 			+ "  WHERE facility_category.facility_category_name like %?1% AND timestamp_facility.ref_timestamp like %?2% ) "
 			+ " FROM facility_category WHERE facility_category.facility_category_name like %?1%", nativeQuery = true)
 	int findByFacilityCategoryCount(String facilityName, String timestamp);
-	
-	/*
-	 * 
-	 * SELECT facility_name FROM facility INNER JOIN facility_category ON facility_category_id_facility_category = id_facility_category
-WHERE facility_category_name='Elliptique' AND id_facility NOT IN (SELECT facility_id_facility FROM timestamp_facility INNER JOIN facility_category ON
-facility_category_id_facility_category = id_facility_category WHERE ref_timestamp like '2019_06_27_17_2'); 
-	 */
+
+
 }

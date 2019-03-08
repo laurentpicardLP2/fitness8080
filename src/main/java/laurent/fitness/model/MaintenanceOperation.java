@@ -2,6 +2,11 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Date;
 
 
@@ -25,6 +30,7 @@ public class MaintenanceOperation implements Serializable {
 	//bi-directional many-to-one association to Facility
 	@ManyToOne
 	@JoinColumn(name="Facility_idFacility")
+	@JsonIgnore
 	private Facility facility;
 
 	public MaintenanceOperation() {

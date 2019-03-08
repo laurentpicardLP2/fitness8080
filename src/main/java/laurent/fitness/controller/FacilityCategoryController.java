@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import laurent.fitness.model.FacilityCategory;
+import laurent.fitness.model.adaptater.FacilityAvailableAdaptater;
+import laurent.fitness.services.FacilityAvailableAdaptaterService;
 import laurent.fitness.services.FacilityCategoryService;
 import laurent.fitness.services.TimestampFacilityService;
 
@@ -22,29 +24,32 @@ import laurent.fitness.services.TimestampFacilityService;
 @RequestMapping("/facilitycategoryctrl")
 @CrossOrigin("http://localhost:4200")
 public class FacilityCategoryController {
-private FacilityCategoryService facilityCategoryService;
-private TimestampFacilityService timestampFacilityService;
+	private FacilityCategoryService facilityCategoryService;
+	private TimestampFacilityService timestampFacilityService;
+	private FacilityAvailableAdaptaterService facilityAvailableAdaptaterService;
 	
 	public FacilityCategoryController(
 			FacilityCategoryService facilityCategoryService,
-			TimestampFacilityService timestampFacilityService
+			TimestampFacilityService timestampFacilityService,
+			FacilityAvailableAdaptaterService facilityAvailableAdaptaterService
 			) {
 		this.facilityCategoryService = facilityCategoryService;
 		this.timestampFacilityService = timestampFacilityService;
+		this.facilityAvailableAdaptaterService = facilityAvailableAdaptaterService;
 	}
 	
-	//Return the list if categories facilities
+	//Return the list if categories facilities available for a timestamp
 	@GetMapping("/getfacilitycategories/{timestamp}")
 	public ResponseEntity<?> getFacilityCategories(@PathVariable String timestamp) {
-		List<FacilityCategory> listeFacilityCategoriesAvailable = null;
-	
+		List<FacilityAvailableAdaptater> listeFacilitiesAvailable = null;
 		try {
-			listeFacilityCategoriesAvailable = this.facilityCategoryService.getFacilitiesAvailable(timestamp);			
+			listeFacilitiesAvailable = this.facilityAvailableAdaptaterService.getFacilitiesAvailable(timestamp);			
 
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(listeFacilityCategoriesAvailable);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(listeFacilitiesAvailable);
 	}
 	
 	//Add a new category of facility

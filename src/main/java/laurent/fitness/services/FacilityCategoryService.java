@@ -5,7 +5,7 @@ import java.util.List;
 import laurent.fitness.model.FacilityCategory;
 
 public interface FacilityCategoryService {
-	public List<FacilityCategory> getFacilitiesAvailable(String timestamp);
+	public List<FacilityCategory> getAllFacilityCategories();
 	
 	public FacilityCategory saveFacilityCategory(FacilityCategory facilityCategory);
 	

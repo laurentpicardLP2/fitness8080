@@ -3,7 +3,9 @@ package laurent.fitness.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class FacilityCategory implements Serializable {
 
 	//bi-directional many-to-one association to Facility
 	@OneToMany(mappedBy="facilityCategory")
+	@JsonManagedReference
 	private List<Facility> facilities;
 	
 	//bi-directional many-to-one association to TimestampFacility

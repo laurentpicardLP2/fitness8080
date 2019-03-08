@@ -26,6 +26,7 @@ public class Purchase implements Serializable {
 	//bi-directional many-to-one association to ConnectedWatch
 	@ManyToOne
 	@JoinColumn(name="ConnectedWatch_idConnectedWatch")
+	
 	private ConnectedWatch connectedWatch;
 
 	//bi-directional many-to-one association to Subscription

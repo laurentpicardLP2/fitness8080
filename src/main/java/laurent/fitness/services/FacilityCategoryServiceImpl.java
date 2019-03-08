@@ -20,15 +20,9 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
     }
 
 	@Override
-	public List<FacilityCategory> getFacilitiesAvailable(String timestamp) {
+	public List<FacilityCategory> getAllFacilityCategories() {
 		// TODO Auto-generated method stub
-		int availableFacilities;
-		List<FacilityCategory> availableFacilityCategories = this.facilityCategoryRepo.findAll();
-		for (int i=0; i<availableFacilityCategories.size(); i++) {
-			availableFacilities = this.timestampFacilityRepo.findByFacilityCategoryCount(availableFacilityCategories.get(i).getFacilityCategoryName(), timestamp);
-			availableFacilityCategories.get(i).setQuantity(availableFacilities);
-		}
-		return availableFacilityCategories;
+		return  this.facilityCategoryRepo.findAll();
 	}
 
 	@Override
