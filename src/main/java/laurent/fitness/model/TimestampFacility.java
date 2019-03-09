@@ -26,8 +26,6 @@ public class TimestampFacility implements Serializable {
 
 	private String refTimestamp;
 
-	private int statusBooking;
-
 	//bi-directional many-to-one association to Facility
 	@ManyToOne
 	@JoinColumn(name="Facility_idFacility")
@@ -70,14 +68,6 @@ public class TimestampFacility implements Serializable {
 
 	public void setRefTimestamp(String refTimestamp) {
 		this.refTimestamp = refTimestamp;
-	}
-
-	public int getStatusBooking() {
-		return this.statusBooking;
-	}
-
-	public void setStatusBooking(int statusBooking) {
-		this.statusBooking = statusBooking;
 	}
 
 	public Facility getFacility() {

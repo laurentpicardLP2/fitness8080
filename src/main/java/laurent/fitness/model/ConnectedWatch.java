@@ -15,6 +15,7 @@ public class ConnectedWatch implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idConnectedWatch;
 
 	private String modelWatch;
@@ -26,9 +27,9 @@ public class ConnectedWatch implements Serializable {
 	@JoinColumn(name="Customer_Users_username")
 	private Customer customer;
 
-	//bi-directional many-to-one association to Purchase
+	//bi-directional many-to-one association to Item
 	@OneToMany(mappedBy="connectedWatch")
-	private List<Purchase> purchases;
+	private List<Item> items;
 
 	public ConnectedWatch() {
 	}
@@ -65,26 +66,26 @@ public class ConnectedWatch implements Serializable {
 		this.customer = customer;
 	}
 
-	public List<Purchase> getPurchases() {
-		return this.purchases;
+	public List<Item> getItems() {
+		return this.items;
 	}
 
-	public void setPurchases(List<Purchase> purchases) {
-		this.purchases = purchases;
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 
-	public Purchase addPurchas(Purchase purchas) {
-		getPurchases().add(purchas);
-		purchas.setConnectedWatch(this);
+	public Item addItem(Item item) {
+		getItems().add(item);
+		item.setConnectedWatch(this);
 
-		return purchas;
+		return item;
 	}
 
-	public Purchase removePurchas(Purchase purchas) {
-		getPurchases().remove(purchas);
-		purchas.setConnectedWatch(null);
+	public Item removeItem(Item item) {
+		getItems().remove(item);
+		item.setConnectedWatch(null);
 
-		return purchas;
+		return item;
 	}
 
 }

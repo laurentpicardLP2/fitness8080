@@ -2,6 +2,9 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Date;
 import java.util.List;
 
@@ -16,34 +19,46 @@ public class Command implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idCommande;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int idCommand;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateTime;
+	private Date dateOfCommand;
 
 	private float totalPrice;
 
-	//bi-directional many-to-many association to Purchase
-	@ManyToMany(mappedBy="commands")
-	private List<Purchase> purchases;
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="Users_username")
+	private User user;
+
+	//bi-directional many-to-many association to Item
+	@ManyToMany(mappedBy="commands", cascade=CascadeType.REMOVE)
+	@JsonBackReference
+	private List<Item> items;
 
 	public Command() {
 	}
-
-	public int getIdCommande() {
-		return this.idCommande;
+	
+	public Command(User user, Date dateOfCommand) {
+		this.user = user;
+		this.dateOfCommand = dateOfCommand;
 	}
 
-	public void setIdCommande(int idCommande) {
-		this.idCommande = idCommande;
+	public int getIdCommand() {
+		return this.idCommand;
 	}
 
-	public Date getDateTime() {
-		return this.dateTime;
+	public void setIdCommand(int idCommand) {
+		this.idCommand = idCommand;
 	}
 
-	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
+	public Date getDateOfCommand() {
+		return this.dateOfCommand;
+	}
+
+	public void setDateOfCommand(Date dateOfCommand) {
+		this.dateOfCommand = dateOfCommand;
 	}
 
 	public float getTotalPrice() {
@@ -54,12 +69,20 @@ public class Command implements Serializable {
 		this.totalPrice = totalPrice;
 	}
 
-	public List<Purchase> getPurchases() {
-		return this.purchases;
+	public User getUser() {
+		return this.user;
 	}
 
-	public void setPurchases(List<Purchase> purchases) {
-		this.purchases = purchases;
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Item> getItems() {
+		return this.items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 
 }

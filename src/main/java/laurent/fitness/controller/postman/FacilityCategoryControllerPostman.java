@@ -61,18 +61,18 @@ public class FacilityCategoryControllerPostman {
 	}
 	
 	//Return the list of available facilities for a category and a timestamp
-		@GetMapping("/getavailablefacilites")
-		public ResponseEntity<?> getFacilitiesAvailable() {
-			List<FacilityCategory> listeFacilityCategories = null;
+	@GetMapping("/getavailablefacilites")
+	public ResponseEntity<?> getFacilitiesAvailable() {
+		List<FacilityCategory> listeFacilityCategories = null;
 
-			try {
-				listeFacilityCategories = this.facilityCategoryService.getAllFacilityCategories();			
+		try {
+			listeFacilityCategories = this.facilityCategoryService.getAllFacilityCategories();			
 
-			} catch (Exception e) {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-			}
-			return ResponseEntity.status(HttpStatus.OK).body(listeFacilityCategories);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
+		return ResponseEntity.status(HttpStatus.OK).body(listeFacilityCategories);
+	}
 	
 	//Add a new category of facility
 	@PostMapping("/addfacilitycategory")

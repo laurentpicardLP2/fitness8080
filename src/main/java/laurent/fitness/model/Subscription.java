@@ -2,9 +2,6 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.List;
 
 
@@ -18,6 +15,7 @@ public class Subscription implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idSubscriptionType;
 
 	private String last;
@@ -26,9 +24,9 @@ public class Subscription implements Serializable {
 
 	private float price;
 
-	//bi-directional many-to-one association to Purchase
+	//bi-directional many-to-one association to Item
 	@OneToMany(mappedBy="subscription")
-	private List<Purchase> purchases;
+	private List<Item> items;
 
 	//bi-directional many-to-one association to Customer
 	@ManyToOne
@@ -70,26 +68,26 @@ public class Subscription implements Serializable {
 		this.price = price;
 	}
 
-	public List<Purchase> getPurchases() {
-		return this.purchases;
+	public List<Item> getItems() {
+		return this.items;
 	}
 
-	public void setPurchases(List<Purchase> purchases) {
-		this.purchases = purchases;
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 
-	public Purchase addPurchas(Purchase purchas) {
-		getPurchases().add(purchas);
-		purchas.setSubscription(this);
+	public Item addItem(Item item) {
+		getItems().add(item);
+		item.setSubscription(this);
 
-		return purchas;
+		return item;
 	}
 
-	public Purchase removePurchas(Purchase purchas) {
-		getPurchases().remove(purchas);
-		purchas.setSubscription(null);
+	public Item removeItem(Item item) {
+		getItems().remove(item);
+		item.setSubscription(null);
 
-		return purchas;
+		return item;
 	}
 
 	public Customer getCustomer() {

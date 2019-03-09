@@ -2,9 +2,6 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Date;
 import java.util.List;
 
@@ -19,12 +16,17 @@ public class SessionTraining implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idSessionTraining;
 
 	private int capacityAttendant;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateTime;
+
+	//bi-directional many-to-one association to Item
+	@OneToMany(mappedBy="sessionTraining")
+	private List<Item> items;
 
 	//bi-directional many-to-one association to Room
 	@ManyToOne
@@ -35,19 +37,6 @@ public class SessionTraining implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="Staff_Users_username")
 	private Staff staff;
-
-	//bi-directional many-to-many association to Purchase
-	@ManyToMany
-	@JoinTable(
-		name="Purchase_has_SessionTraining"
-		, joinColumns={
-			@JoinColumn(name="SessionTraining_idSessionTraining")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="Purchase_idPrestation")
-			}
-		)
-	private List<Purchase> purchases;
 
 	//bi-directional many-to-many association to Customer
 	@ManyToMany
@@ -89,6 +78,28 @@ public class SessionTraining implements Serializable {
 		this.dateTime = dateTime;
 	}
 
+	public List<Item> getItems() {
+		return this.items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
+	public Item addItem(Item item) {
+		getItems().add(item);
+		item.setSessionTraining(this);
+
+		return item;
+	}
+
+	public Item removeItem(Item item) {
+		getItems().remove(item);
+		item.setSessionTraining(null);
+
+		return item;
+	}
+
 	public Room getRoom() {
 		return this.room;
 	}
@@ -103,14 +114,6 @@ public class SessionTraining implements Serializable {
 
 	public void setStaff(Staff staff) {
 		this.staff = staff;
-	}
-
-	public List<Purchase> getPurchases() {
-		return this.purchases;
-	}
-
-	public void setPurchases(List<Purchase> purchases) {
-		this.purchases = purchases;
 	}
 
 	public List<Customer> getCustomers() {

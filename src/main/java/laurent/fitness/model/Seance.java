@@ -2,9 +2,6 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.List;
 
 
@@ -21,15 +18,14 @@ public class Seance implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idSeance;
 
+	//bi-directional many-to-one association to Item
+	@OneToMany(mappedBy="seance")
+	private List<Item> items;
+
 	//bi-directional many-to-one association to Customer
 	@ManyToOne
 	@JoinColumn(name="Customer_Users_username")
 	private Customer customer;
-
-	//bi-directional many-to-one association to Purchase
-	@ManyToOne
-	@JoinColumn(name="Purchase_idPrestation")
-	private Purchase purchase;
 
 	//bi-directional many-to-one association to TimestampFacility
 	@OneToMany(mappedBy="seance")
@@ -46,20 +42,34 @@ public class Seance implements Serializable {
 		this.idSeance = idSeance;
 	}
 
+	public List<Item> getItems() {
+		return this.items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
+	public Item addItem(Item item) {
+		getItems().add(item);
+		item.setSeance(this);
+
+		return item;
+	}
+
+	public Item removeItem(Item item) {
+		getItems().remove(item);
+		item.setSeance(null);
+
+		return item;
+	}
+
 	public Customer getCustomer() {
 		return this.customer;
 	}
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	}
-
-	public Purchase getPurchase() {
-		return this.purchase;
-	}
-
-	public void setPurchase(Purchase purchase) {
-		this.purchase = purchase;
 	}
 
 	public List<TimestampFacility> getTimestampFacilities() {

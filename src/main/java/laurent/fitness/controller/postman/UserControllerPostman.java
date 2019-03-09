@@ -23,6 +23,7 @@ import laurent.fitness.services.UserService;
 import laurent.fitness.model.Authority;
 import laurent.fitness.model.Customer;
 import laurent.fitness.model.Staff;
+import laurent.fitness.model.User;
 
 @RestController
 @RequestMapping("/postman/userctrl")
@@ -114,6 +115,21 @@ public class UserControllerPostman {
 			System.out.println(e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
 		}
+	}
+	
+	//login process by Postman
+	@PostMapping("/login")
+	public ResponseEntity<?> userLogin(@Valid String username, @Valid String password) {			
+			
+		try {
+			User user = this.userService.findByUsername(username);
+		return ResponseEntity.status(HttpStatus.OK).body(user);
+			
+		} catch(Exception e) {
+			
+			System.out.println(e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
+		}			
 	}
 
 }

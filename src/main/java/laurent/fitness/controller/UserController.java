@@ -29,6 +29,7 @@ import laurent.fitness.services.UserService;
 import laurent.fitness.model.Authority;
 import laurent.fitness.model.Customer;
 import laurent.fitness.model.Staff;
+import laurent.fitness.model.User;
 
 @RestController
 @RequestMapping("/userctrl")
@@ -92,6 +93,23 @@ public class UserController {
 	@GetMapping("/authorities")
 	public List<Authority> getAllAuthorities() {
 		return this.authorityService.getAllAuthorities();
+	}
+	
+	
+	//temporary login process 
+	@PostMapping("/login")
+	public ResponseEntity<?> userLogin(@RequestBody User pUser) {			
+		System.out.println("/login");
+		try {
+			User user = this.userService.findByUsername(pUser.getUsername());
+			System.out.println("username : " + user.getUsername());
+		return ResponseEntity.status(HttpStatus.OK).body(user);
+			
+		} catch(Exception e) {
+			
+			System.out.println(e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
+		}			
 	}
 
 }

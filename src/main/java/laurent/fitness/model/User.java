@@ -7,6 +7,8 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.List;
 
@@ -44,9 +46,11 @@ public class User implements Serializable {
 	
 	protected byte enabled;
 	
-	//bi-directional many-to-one association to Purchase
+
+	//bi-directional many-to-one association to Command
 	@OneToMany(mappedBy="user")
-	private List<Purchase> purchases;
+	@JsonIgnore
+	private List<Command> commands;
 
 
 	//bi-directional one-to-one association to Authority
@@ -55,6 +59,11 @@ public class User implements Serializable {
 	protected Authority authority;
 
 	public User() {
+	}
+	
+	public User(String username,String password) {
+		this.username = username;
+		this.password = password;
 	}
 	
 	public User(int idUser, String username, String fullname, String password, String email, String tel, Date dateOfRegistration, byte enabled) {
@@ -132,28 +141,28 @@ public class User implements Serializable {
 		this.tel = tel;
 	}
 
-	public List<Purchase> getPurchases() {
-		return this.purchases;
+	public List<Command> getCommands() {
+		return this.commands;
 	}
 
-	public void setPurchases(List<Purchase> purchases) {
-		this.purchases = purchases;
+	public void setCommands(List<Command> commands) {
+		this.commands = commands;
 	}
 
-	public Purchase addPurchas(Purchase purchas) {
-		getPurchases().add(purchas);
-		purchas.setUser(this);
+	public Command addCommand(Command command) {
+		getCommands().add(command);
+		command.setUser(this);
 
-		return purchas;
+		return command;
 	}
 
-	public Purchase removePurchas(Purchase purchas) {
-		getPurchases().remove(purchas);
-		purchas.setUser(null);
+	public Command removeCommand(Command command) {
+		getCommands().remove(command);
+		command.setUser(null);
 
-		return purchas;
+		return command;
 	}
-
+	
 	public Authority getAuthority() {
 		return this.authority;
 	}
