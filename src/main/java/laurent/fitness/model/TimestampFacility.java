@@ -29,20 +29,20 @@ public class TimestampFacility implements Serializable {
 	//bi-directional many-to-one association to Facility
 	@ManyToOne
 	@JoinColumn(name="Facility_idFacility")
-	@JsonIgnore
+	@JsonBackReference
 	private Facility facility;
 	
 	//bi-directional many-to-one association to FacilityCategory
 	@ManyToOne
 	@JoinColumn(name="FacilityCategory_idFacilityCategory")
-	@JsonIgnore
+	@JsonBackReference
 	private FacilityCategory facilityCategory;
 
 
 	//bi-directional many-to-one association to Seance
 	@ManyToOne
 	@JoinColumn(name="Seance_idSeance")
-	@JsonIgnore
+	@JsonBackReference
 	private Seance seance;
 
 	public TimestampFacility() {

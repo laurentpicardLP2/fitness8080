@@ -30,7 +30,7 @@ public class MaintenanceOperation implements Serializable {
 	//bi-directional many-to-one association to Facility
 	@ManyToOne
 	@JoinColumn(name="Facility_idFacility")
-	@JsonIgnore
+	@JsonBackReference
 	private Facility facility;
 
 	public MaintenanceOperation() {

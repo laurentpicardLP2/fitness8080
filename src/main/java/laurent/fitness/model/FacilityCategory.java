@@ -41,6 +41,7 @@ public class FacilityCategory implements Serializable {
 	
 	//bi-directional many-to-one association to TimestampFacility
 	@OneToMany(mappedBy="facilityCategory")
+	@JsonManagedReference
 	private List<TimestampFacility> timestampFacilities;
 
 

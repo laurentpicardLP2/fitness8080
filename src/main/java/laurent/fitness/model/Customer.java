@@ -3,6 +3,10 @@ package laurent.fitness.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Date;
 import java.util.List;
 
@@ -37,14 +41,22 @@ public class Customer extends User implements Serializable {
 
 	//bi-directional many-to-one association to ConnectedWatch
 	@OneToMany(mappedBy="customer")
+	@JsonIgnore
 	private List<ConnectedWatch> connectedWatches;
 
 	//bi-directional many-to-one association to Seance
 	@OneToMany(mappedBy="customer")
+	@JsonIgnore
 	private List<Seance> seances;
+	
+	//bi-directional many-to-many association to SessionTraining
+	@ManyToMany(mappedBy="customers")
+	@JsonIgnore
+	private List<SessionTraining> sessionTrainings;
 
 	//bi-directional many-to-one association to Subscription
 	@OneToMany(mappedBy="customer")
+	@JsonIgnore
 	private List<Subscription> subscriptions;
 	
 	public Customer() {
@@ -222,6 +234,14 @@ public class Customer extends User implements Serializable {
 		seance.setCustomer(this);
 
 		return seance;
+	}
+	
+	public List<SessionTraining> getSessionTrainings() {
+		return this.sessionTrainings;
+	}
+
+	public void setSessionTrainings(List<SessionTraining> sessionTrainings) {
+		this.sessionTrainings = sessionTrainings;
 	}
 
 	public Seance removeSeance(Seance seance) {

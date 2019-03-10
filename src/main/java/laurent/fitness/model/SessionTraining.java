@@ -2,6 +2,10 @@ package laurent.fitness.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Date;
 import java.util.List;
 
@@ -12,30 +16,24 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="SessionTraining.findAll", query="SELECT s FROM SessionTraining s")
-public class SessionTraining implements Serializable {
+public class SessionTraining extends Item implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idSessionTraining;
 
 	private int capacityAttendant;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateTime;
 
-	//bi-directional many-to-one association to Item
-	@OneToMany(mappedBy="sessionTraining")
-	private List<Item> items;
-
 	//bi-directional many-to-one association to Room
 	@ManyToOne
 	@JoinColumn(name="Room_idRoom")
+	@JsonBackReference
 	private Room room;
 
 	//bi-directional many-to-one association to Staff
 	@ManyToOne
 	@JoinColumn(name="Staff_Users_username")
+	@JsonBackReference
 	private Staff staff;
 
 	//bi-directional many-to-many association to Customer
@@ -49,17 +47,14 @@ public class SessionTraining implements Serializable {
 			@JoinColumn(name="Customer_Users_username")
 			}
 		)
+	@JsonBackReference
 	private List<Customer> customers;
 
 	public SessionTraining() {
 	}
-
-	public int getIdSessionTraining() {
-		return this.idSessionTraining;
-	}
-
-	public void setIdSessionTraining(int idSessionTraining) {
-		this.idSessionTraining = idSessionTraining;
+	
+	public SessionTraining(List<Command> commands) {
+		super(commands);
 	}
 
 	public int getCapacityAttendant() {
@@ -76,28 +71,6 @@ public class SessionTraining implements Serializable {
 
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
-	}
-
-	public List<Item> getItems() {
-		return this.items;
-	}
-
-	public void setItems(List<Item> items) {
-		this.items = items;
-	}
-
-	public Item addItem(Item item) {
-		getItems().add(item);
-		item.setSessionTraining(this);
-
-		return item;
-	}
-
-	public Item removeItem(Item item) {
-		getItems().remove(item);
-		item.setSessionTraining(null);
-
-		return item;
 	}
 
 	public Room getRoom() {

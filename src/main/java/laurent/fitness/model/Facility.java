@@ -39,12 +39,12 @@ public class Facility implements Serializable {
 
 	//bi-directional many-to-one association to MaintenanceOperation
 	@OneToMany(mappedBy="facility")
-	@JsonIgnore
+	@JsonManagedReference
 	private List<MaintenanceOperation> maintenanceOperations;
 
 	//bi-directional many-to-one association to TimestampFacility
 	@OneToMany(mappedBy="facility")
-	@JsonIgnore
+	@JsonManagedReference
 	private List<TimestampFacility> timestampFacilities;
 
 	public Facility() {

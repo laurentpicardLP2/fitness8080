@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.Date;
 import java.util.List;
@@ -24,6 +25,7 @@ public class Staff extends User implements Serializable {
 
 	//bi-directional many-to-one association to SessionTraining
 	@OneToMany(mappedBy="staff")
+	@JsonManagedReference
 	private List<SessionTraining> sessionTrainings;
 
 

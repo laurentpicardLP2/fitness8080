@@ -1,7 +1,6 @@
 package laurent.fitness.controller.postman;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -12,33 +11,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import laurent.fitness.model.Command;
-import laurent.fitness.model.Item;
+import laurent.fitness.model.Seance;
 import laurent.fitness.services.CommandService;
-import laurent.fitness.services.ItemService;
+import laurent.fitness.services.SeanceService;
 
 @RestController
-@RequestMapping("/postman/itemctrl")
-public class ItemControllerPostman {
-	private ItemService itemService;
+@RequestMapping("/postman/seancectrl")
+public class SeanceControllerPostman {
+	private SeanceService seanceService;
 	private CommandService commandService;
 	
-	public ItemControllerPostman(ItemService itemService, CommandService commandService) {
-		this.itemService = itemService;
+	public SeanceControllerPostman(SeanceService seanceService, CommandService commandService) {
+		this.seanceService = seanceService;
 		this.commandService = commandService;
 	}
 	
-	//Initialise un item pour une commande donnée d'un utilisateur connecté
-	@PostMapping("/additem")
+	//Initialise une seance pour une commande donnée d'un utilisateur connecté (customer ou staff-seller)
+	@PostMapping("/addseance")
 	public ResponseEntity<?> addItem(@Valid int idCommand) {
-		List<Item> items;
+		//List<Item> items;
 		ArrayList<Command> commands = new ArrayList<Command>();
 		try {
 			Command currentCommand = this.commandService.findByCommand(idCommand);
 			commands.add(currentCommand);
-			items = currentCommand.getItems();
-			Item newItem = this.itemService.saveItem(new Item(commands));
+			//items = currentCommand.getItems();
+			Seance newSeance = this.seanceService.saveSeance(new Seance(commands));
 		
-		return ResponseEntity.status(HttpStatus.OK).body(newItem);
+		return ResponseEntity.status(HttpStatus.OK).body(newSeance);
 		
 		} catch(Exception e) {
 			
