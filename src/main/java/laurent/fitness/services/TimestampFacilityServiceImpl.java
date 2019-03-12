@@ -43,8 +43,9 @@ public class TimestampFacilityServiceImpl implements TimestampFacilityService {
 	}
 
 	@Override
-	public void deleteTimestampFacility(TimestampFacility timestampFacility) {
+	public void deleteTimestampFacility(int idTimestampFacillity) {
 		// TODO Auto-generated method stub
+		TimestampFacility timestampFacility = this.timestampFacilityRepo.findById(idTimestampFacillity).get();
 		this.timestampFacilityRepo.delete(timestampFacility);
 	}
 

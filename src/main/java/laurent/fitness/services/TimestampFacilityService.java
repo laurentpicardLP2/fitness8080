@@ -11,7 +11,7 @@ public interface TimestampFacilityService {
 	
 	public TimestampFacility saveNewTimestampFacility(String refTimestamp, String facilityName, String facilityCategoryName);
 	
-	public void deleteTimestampFacility(TimestampFacility timestampFacility);
+	public void deleteTimestampFacility(int idTimestampFacillity);
 	
 	public int findByFacilityCategoryCount(String facilityCategoryName, String timestamp);
 }
