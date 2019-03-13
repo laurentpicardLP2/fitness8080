@@ -6,23 +6,28 @@ import org.springframework.stereotype.Service;
 
 import laurent.fitness.model.Facility;
 import laurent.fitness.model.FacilityCategory;
+import laurent.fitness.model.Seance;
 import laurent.fitness.model.TimestampFacility;
 import laurent.fitness.repository.FacilityCategoryRepository;
 import laurent.fitness.repository.FacilityRepository;
+import laurent.fitness.repository.SeanceRepository;
 import laurent.fitness.repository.TimestampFacilityRepository;
 
 @Service
 public class TimestampFacilityServiceImpl implements TimestampFacilityService {
 	
 	private TimestampFacilityRepository timestampFacilityRepo;
+	private SeanceRepository seanceRepo;
 	private FacilityRepository facilityRepo;
 	private FacilityCategoryRepository facilityCategoryRepo;
 	
 	public TimestampFacilityServiceImpl(
 			TimestampFacilityRepository timestampFacilityRepo, 
+			SeanceRepository seanceRepo,
 			FacilityRepository facilityRepo, 
 			FacilityCategoryRepository facilityCategoryRepo) {
 		this.timestampFacilityRepo = timestampFacilityRepo;
+		this.seanceRepo = seanceRepo;
 		this.facilityRepo = facilityRepo;
 		this.facilityCategoryRepo = facilityCategoryRepo;
 	}
@@ -34,11 +39,12 @@ public class TimestampFacilityServiceImpl implements TimestampFacilityService {
 	}
 
 	@Override
-	public TimestampFacility saveNewTimestampFacility(String refTimestamp, String facilityName, String facilityCategoryName) {
+	public TimestampFacility saveNewTimestampFacility(int idItem, String refTimestamp, String facilityName, String facilityCategoryName) {
 		// TODO Auto-generated method stub
+		Seance seance = this.seanceRepo.findByIdItem(idItem);
 		Facility facility = this.facilityRepo.findByFacilityName(facilityName);
 		FacilityCategory facilityCategory = this.facilityCategoryRepo.findByFacilityCategoryName(facilityCategoryName);
-		TimestampFacility timestampFacility = new TimestampFacility(refTimestamp, facility, facilityCategory);
+		TimestampFacility timestampFacility = new TimestampFacility(seance, refTimestamp, facility, facilityCategory);
 		return this.timestampFacilityRepo.save(timestampFacility);
 	}
 

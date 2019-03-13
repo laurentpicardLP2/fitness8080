@@ -9,7 +9,7 @@ public interface TimestampFacilityService {
 	
 	public TimestampFacility saveTimestampFacility(TimestampFacility timestampFacility);
 	
-	public TimestampFacility saveNewTimestampFacility(String refTimestamp, String facilityName, String facilityCategoryName);
+	public TimestampFacility saveNewTimestampFacility(int idItem, String refTimestamp, String facilityName, String facilityCategoryName);
 	
 	public void deleteTimestampFacility(int idTimestampFacillity);
 	

@@ -25,15 +25,16 @@ private TimestampFacilityService timestampFacilityService;
 	}
 	
 	//Add a new timestampFacility
-	@PostMapping("/addtimestampfacility/{refTimestamp}/{facilityName}/{facilityCategoryName}")
+	@PostMapping("/addtimestampfacility/{idItem}/{refTimestamp}/{facilityName}/{facilityCategoryName}")
 	public ResponseEntity<?> addTimestampFacility(
+			@PathVariable int idItem,
 			@PathVariable String refTimestamp, 
 			@PathVariable String facilityName, 
 			@PathVariable String facilityCategoryName) {
 		try {
 			System.out.println("facilityCategoryName : " + facilityCategoryName);
 		return ResponseEntity.status(HttpStatus.OK).body(
-				this.timestampFacilityService.saveNewTimestampFacility(refTimestamp, facilityName, facilityCategoryName));
+				this.timestampFacilityService.saveNewTimestampFacility(idItem, refTimestamp, facilityName, facilityCategoryName));
 		
 		} catch(Exception e) {
 			

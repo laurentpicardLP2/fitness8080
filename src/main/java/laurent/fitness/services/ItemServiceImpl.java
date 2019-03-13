@@ -28,4 +28,12 @@ public class ItemServiceImpl implements ItemService {
 		return this.itemRepo.save(item);
 	}
 
+	@Override
+	public void deleteItem(int idItem) {
+		// TODO Auto-generated method stub
+		System.out.println(("this.itemRepo.findById(idItem).get() AVANT APPEL "));
+		System.out.println(("this.itemRepo.findById(idItem).get()" + this.itemRepo.findById(idItem).get()));
+		this.itemRepo.delete(this.itemRepo.findById(idItem).get());
+	}
+
 }

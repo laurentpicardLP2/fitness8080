@@ -1,12 +1,14 @@
 package laurent.fitness.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import laurent.fitness.model.Command;
 import laurent.fitness.model.Seance;
 import laurent.fitness.services.CommandService;
+import laurent.fitness.services.ItemService;
 import laurent.fitness.services.SeanceService;
 
 @RestController
@@ -23,22 +26,19 @@ import laurent.fitness.services.SeanceService;
 public class SeanceController {
 
 	private SeanceService seanceService;
-	private CommandService commandService;
+	private ItemService itemService;
 	
-	public SeanceController(SeanceService seanceService, CommandService commandService) {
+	public SeanceController(SeanceService seanceService, ItemService itemService) {
 		this.seanceService = seanceService;
-		this.commandService = commandService;
+		this.itemService = itemService;
 	}
 	
-	//Initialise une seance pour une commande donnée d'un utilisateur connecté (customer ou staff-seller)
-	@PostMapping("/addseance/{idCommand}")
-	public ResponseEntity<?> addItem(@PathVariable int idCommand) {
-		//List<Item> items;
-		ArrayList<Command> commands = new ArrayList<Command>();
+	//Initialise une seance pour une commande donnée d'un utilisateur connecté
+	@PostMapping("/addseance/{idCommand}/{username}")
+	public ResponseEntity<?> addSeance(@PathVariable int idCommand, @PathVariable String username) {
+
 		try {
-			Command currentCommand = this.commandService.findByCommand(idCommand);
-			commands.add(currentCommand);
-			Seance newSeance = this.seanceService.saveSeance(new Seance(commands));
+			Seance newSeance = this.seanceService.saveSeance(idCommand, username);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(newSeance);
 		
@@ -48,5 +48,21 @@ public class SeanceController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
 		}			
 	}
+	
+	//Supprime une seance 
+	@DeleteMapping("/deleteseance/{idItem}")
+	public ResponseEntity<?> deleteSeance(@PathVariable int idItem) {
+		try {
+			this.itemService.deleteItem(idItem);
+			return ResponseEntity.status(HttpStatus.OK).body(null);
+		
+		} catch(Exception e) {
+			
+			System.out.println(e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
+		}			
+	}
+
+	
 		
 }

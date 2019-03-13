@@ -22,8 +22,8 @@ public class TimestampFacility implements Serializable {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	private int idTimestampFacillity;
-
+	private int idTimestampFacility;
+	
 	private String refTimestamp;
 
 	//bi-directional many-to-one association to Facility
@@ -48,18 +48,19 @@ public class TimestampFacility implements Serializable {
 	public TimestampFacility() {
 	}
 
-    public TimestampFacility(String refTimestamp, Facility facility, FacilityCategory facilityCategory) {
+    public TimestampFacility(Seance seance, String refTimestamp, Facility facility, FacilityCategory facilityCategory) {
+    	this.seance = seance;
 		this.refTimestamp = refTimestamp;
 		this.facility = facility;
 		this.facilityCategory = facilityCategory;
 	}
 
-	public int getIdTimestampFacillity() {
-		return this.idTimestampFacillity;
+	public int getIdTimestampFacility() {
+		return this.idTimestampFacility;
 	}
 
-	public void setIdTimestampFacillity(int idTimestampFacillity) {
-		this.idTimestampFacillity = idTimestampFacillity;
+	public void setIdTimestampFacility(int idTimestampFacility) {
+		this.idTimestampFacility = idTimestampFacility;
 	}
 
 	public String getRefTimestamp() {

@@ -38,17 +38,17 @@ public class Customer extends User implements Serializable {
 	private String deliveryCity;
 
 	private String deliveryCountry;
-
+	
+	//bi-directional many-to-one association to Seance
+	@JsonIgnore
+	@OneToMany(mappedBy="customer")
+	private List<Seance> seances;
+		
 	//bi-directional many-to-one association to ConnectedWatch
 	@OneToMany(mappedBy="customer")
 	@JsonIgnore
 	private List<ConnectedWatch> connectedWatches;
 
-	//bi-directional many-to-one association to Seance
-	@OneToMany(mappedBy="customer")
-	@JsonIgnore
-	private List<Seance> seances;
-	
 	//bi-directional many-to-many association to SessionTraining
 	@ManyToMany(mappedBy="customers")
 	@JsonIgnore
@@ -220,7 +220,7 @@ public class Customer extends User implements Serializable {
 
 		return connectedWatch;
 	}
-
+	
 	public List<Seance> getSeances() {
 		return this.seances;
 	}
@@ -235,6 +235,13 @@ public class Customer extends User implements Serializable {
 
 		return seance;
 	}
+
+	public Seance removeSeance(Seance seance) {
+		getSeances().remove(seance);
+		seance.setCustomer(null);
+
+		return seance;
+	}
 	
 	public List<SessionTraining> getSessionTrainings() {
 		return this.sessionTrainings;
@@ -242,13 +249,6 @@ public class Customer extends User implements Serializable {
 
 	public void setSessionTrainings(List<SessionTraining> sessionTrainings) {
 		this.sessionTrainings = sessionTrainings;
-	}
-
-	public Seance removeSeance(Seance seance) {
-		getSeances().remove(seance);
-		seance.setCustomer(null);
-
-		return seance;
 	}
 
 	public List<Subscription> getSubscriptions() {

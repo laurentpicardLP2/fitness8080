@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
@@ -19,14 +20,17 @@ import java.util.List;
 public class Seance extends Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+
 	//bi-directional many-to-one association to Customer
 	@ManyToOne
 	@JoinColumn(name="Customer_Users_username")
-	@JsonBackReference
+	@JsonIgnore
 	private Customer customer;
 
+	private int statusSeance;
+
 	//bi-directional many-to-one association to TimestampFacility
-	@OneToMany(mappedBy="seance")
+	@OneToMany(mappedBy="seance", cascade=CascadeType.REMOVE)
 	@JsonManagedReference
 	private List<TimestampFacility> timestampFacilities;
 
@@ -38,13 +42,27 @@ public class Seance extends Item implements Serializable {
 		super(commands);
 		this.timestampFacilities = new ArrayList<TimestampFacility>();
 	}
-
+	
+	public Seance (List<Command> commands, Customer customer) {
+		super(commands);
+		this.customer = customer;
+		this.timestampFacilities = new ArrayList<TimestampFacility>();
+	}
+	
 	public Customer getCustomer() {
 		return this.customer;
 	}
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	
+	public int getStatusSeance() {
+		return this.statusSeance;
+	}
+
+	public void setStatusSeance(int statusSeance) {
+		this.statusSeance = statusSeance;
 	}
 	
 	public List<TimestampFacility> getTimestampFacilities() {

@@ -31,11 +31,12 @@ public class Command implements Serializable {
 	
 	private int statusCommand;
 
-	//bi-directional many-to-one association to User
+	
+//bi-directional many-to-one association to Customer
 	@ManyToOne
-	@JoinColumn(name="Users_username")
+	@JoinColumn(name="Customer_Users_username")
 	@JsonManagedReference
-	private User user;
+	private Customer customer;
 
 	//bi-directional many-to-many association to Item
 	@ManyToMany(mappedBy="commands", cascade=CascadeType.REMOVE)
@@ -46,13 +47,13 @@ public class Command implements Serializable {
 		this.items = new ArrayList<Item>();
 	}
 	
-	public Command(User user) {
-		this.user = user;
+	public Command(Customer customer) {
+		this.customer = customer;
 		this.items = new ArrayList<Item>();
 	}
 	
-	public Command(User user, Date dateOfCommand) {
-		this.user = user;
+	public Command(Customer customer, Date dateOfCommand) {
+		this.customer = customer;
 		this.dateOfCommand = dateOfCommand;
 		this.items = new ArrayList<Item>();
 	}
@@ -89,12 +90,12 @@ public class Command implements Serializable {
 		this.statusCommand = statusCommand;
 	}
 
-	public User getUser() {
-		return this.user;
+	public Customer getCustomer() {
+		return this.customer;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public List<Item> getItems() {

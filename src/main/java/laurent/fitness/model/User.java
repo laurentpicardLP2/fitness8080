@@ -48,12 +48,6 @@ public class User implements Serializable {
 	protected byte enabled;
 	
 
-	//bi-directional many-to-one association to Command
-	@OneToMany(mappedBy="user")
-	@JsonIgnore
-	private List<Command> commands;
-
-
 	//bi-directional one-to-one association to Authority
 	@OneToOne(optional=true, cascade=CascadeType.REMOVE)
 	@JoinColumn(name="username")
@@ -142,28 +136,6 @@ public class User implements Serializable {
 		this.tel = tel;
 	}
 
-	public List<Command> getCommands() {
-		return this.commands;
-	}
-
-	public void setCommands(List<Command> commands) {
-		this.commands = commands;
-	}
-
-	public Command addCommand(Command command) {
-		getCommands().add(command);
-		command.setUser(this);
-
-		return command;
-	}
-
-	public Command removeCommand(Command command) {
-		getCommands().remove(command);
-		command.setUser(null);
-
-		return command;
-	}
-	
 	public Authority getAuthority() {
 		return this.authority;
 	}
@@ -171,6 +143,8 @@ public class User implements Serializable {
 	public void setAuthority(Authority authority) {
 		this.authority = authority;
 	}
+
+
 
 
 }

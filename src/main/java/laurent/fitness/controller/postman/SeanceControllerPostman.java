@@ -28,16 +28,11 @@ public class SeanceControllerPostman {
 	
 	//Initialise une seance pour une commande donnée d'un utilisateur connecté (customer ou staff-seller)
 	@PostMapping("/addseance")
-	public ResponseEntity<?> addItem(@Valid int idCommand) {
-		//List<Item> items;
-		ArrayList<Command> commands = new ArrayList<Command>();
+	public ResponseEntity<?> addSeance(@Valid int idCommand, @Valid String username) {
 		try {
-			Command currentCommand = this.commandService.findByCommand(idCommand);
-			commands.add(currentCommand);
-			//items = currentCommand.getItems();
-			Seance newSeance = this.seanceService.saveSeance(new Seance(commands));
+			Seance newSeance = this.seanceService.saveSeance(idCommand, username);
 		
-		return ResponseEntity.status(HttpStatus.OK).body(newSeance);
+			return ResponseEntity.status(HttpStatus.OK).body(newSeance);
 		
 		} catch(Exception e) {
 			

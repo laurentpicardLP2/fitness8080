@@ -25,6 +25,12 @@ public class CustomerServiceImpl implements CustomerService {
 		// TODO Auto-generated method stub
 		return this.customerRepo.save(customer);
 	}
+
+	@Override
+	public Customer findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return this.customerRepo.findByUsername(username);
+	}
 	
 }
 

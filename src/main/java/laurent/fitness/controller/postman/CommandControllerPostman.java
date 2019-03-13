@@ -12,28 +12,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import laurent.fitness.model.Command;
+import laurent.fitness.model.Customer;
 import laurent.fitness.model.User;
 import laurent.fitness.services.CommandService;
+import laurent.fitness.services.CustomerService;
 import laurent.fitness.services.UserService;
 
 @RestController
 @RequestMapping("/postman/commandctrl")
 public class CommandControllerPostman {
 	private CommandService commandService;
-	private UserService userService;
+	private CustomerService customerService;
 	
-	public CommandControllerPostman(CommandService commandService, UserService userService) {
+	public CommandControllerPostman(CommandService commandService, CustomerService customerService) {
 		this.commandService = commandService;
-		this.userService = userService;
+		this.customerService = customerService;
 	}
 	
 	//Initialise une commande lorsqu'un utilisateur se connecte
 	@PostMapping("/addcommand")
 	public ResponseEntity<?> addCommand(@Valid String username) {
 		try {
-			User userLogin = this.userService.findByUsername(username);
-			this.commandService.saveCommand(new Command(userLogin, new Date()));
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+			Customer customer = this.customerService.findByUsername(username);
+			return ResponseEntity.status(HttpStatus.OK).body(this.commandService.saveCommand(new Command(customer, new Date())));
 		
 		} catch(Exception e) {
 			
