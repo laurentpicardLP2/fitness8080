@@ -32,7 +32,6 @@ private TimestampFacilityService timestampFacilityService;
 			@PathVariable String facilityName, 
 			@PathVariable String facilityCategoryName) {
 		try {
-			System.out.println("facilityCategoryName : " + facilityCategoryName);
 		return ResponseEntity.status(HttpStatus.OK).body(
 				this.timestampFacilityService.saveNewTimestampFacility(idItem, refTimestamp, facilityName, facilityCategoryName));
 		
