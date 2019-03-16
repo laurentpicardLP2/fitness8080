@@ -16,11 +16,11 @@ public interface TimestampFacilityRepository extends JpaRepository <TimestampFac
 //			+ " FROM facility_category WHERE facility_category.facility_category_name like %?1%", nativeQuery = true)
 
 	
-	@Query(value = "SELECT (facility_category.quantity) - "
+	@Query(value = "SELECT (facility_category.quantity_facility_category) - "
 			+ " (SELECT COUNT(*) FROM timestamp_facility INNER JOIN facility_category ON "
 			+ " timestamp_facility.facility_category_id_facility_category = facility_category.id_facility_category "
-			+ "  WHERE facility_category.facility_category_name like %?1% AND timestamp_facility.ref_timestamp like %?2% ) "
-			+ " FROM facility_category WHERE facility_category.facility_category_name like %?1%", nativeQuery = true)
-	int findByFacilityCategoryCount(String facilityName, String timestamp);
+			+ "  WHERE facility_category.name_facility_category like %?1% AND timestamp_facility.ref_timestamp like %?2% ) "
+			+ " FROM facility_category WHERE facility_category.name_facility_category like %?1%", nativeQuery = true)
+	int findByFacilityCategoryCount(String nameFacility, String timestamp);
 
 }

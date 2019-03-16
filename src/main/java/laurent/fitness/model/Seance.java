@@ -38,13 +38,13 @@ public class Seance extends Item implements Serializable {
 		this.timestampFacilities = new ArrayList<TimestampFacility>();
 	}
 	
-	public Seance (List<Command> commands) {
-		super(commands);
+	public Seance (List<Command> commands, String typeItem) {
+		super(commands, typeItem);
 		this.timestampFacilities = new ArrayList<TimestampFacility>();
 	}
 	
-	public Seance (List<Command> commands, Customer customer) {
-		super(commands);
+	public Seance (List<Command> commands, String typeItem, Customer customer) {
+		super(commands, typeItem);
 		this.customer = customer;
 		this.timestampFacilities = new ArrayList<TimestampFacility>();
 	}

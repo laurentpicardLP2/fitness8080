@@ -13,7 +13,7 @@ public interface FacilityCategoryService {
 	
 	public FacilityCategory findByFacilityCategoryName(String facilityCategoryName);
 	
-	public FacilityCategory updateFacilityCategory(String facilityCategoryName, String quantity, 
-			String price, String description, String image);
+	public FacilityCategory updateFacilityCategory(String nameFacilityCategory, String quantityFacilityCategory,
+			String priceFacilityCategory);
 
 }

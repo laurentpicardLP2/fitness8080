@@ -33,16 +33,18 @@ public class FacilityAvailableAdaptaterServiceImpl implements FacilityAvailableA
 	public List<FacilityAvailableAdaptater> getFacilitiesAvailable(String timestamp) {
 		// TODO Auto-generated method stub
 		int availableFacilities = 0;
-		String facilityCategoryName = "";
+		String nameFacilityCategory = "";
+		float priceFacilityCategory = 0f;
 		ArrayList<FacilityAvailableAdaptater> facilitiesAvailableAdaptater = new ArrayList<FacilityAvailableAdaptater>() ;
 		List<Facility> facilities = null;
 		List<FacilityCategory> facilityCategories = this.facilityCategoryRepo.findAll();
 		
 		for (int i=0; i<facilityCategories.size(); i++) {
-			facilityCategoryName = facilityCategories.get(i).getFacilityCategoryName();
-			availableFacilities = this.timestampFacilityRepo.findByFacilityCategoryCount(facilityCategoryName, timestamp);
-			facilities = this.facilityRepo.findByFacilityAvailable(facilityCategoryName, timestamp);
-			facilitiesAvailableAdaptater.add(new FacilityAvailableAdaptater(facilityCategoryName, availableFacilities, facilities));
+			nameFacilityCategory = facilityCategories.get(i).getNameFacilityCategory();
+			priceFacilityCategory = facilityCategories.get(i).getPriceFacilityCategory();
+			availableFacilities = this.timestampFacilityRepo.findByFacilityCategoryCount(nameFacilityCategory, timestamp);
+			facilities = this.facilityRepo.findByFacilityAvailable(nameFacilityCategory, timestamp);
+			facilitiesAvailableAdaptater.add(new FacilityAvailableAdaptater(nameFacilityCategory, priceFacilityCategory, availableFacilities, facilities));
 		}
 		return facilitiesAvailableAdaptater;
 	}

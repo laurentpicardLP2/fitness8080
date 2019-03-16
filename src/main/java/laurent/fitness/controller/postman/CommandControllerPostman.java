@@ -47,7 +47,7 @@ public class CommandControllerPostman {
 	@DeleteMapping("/delcommand")
 	public ResponseEntity<?> delCommand(@Valid int idCommand){
 		try {
-			this.commandService.deleteCommand(this.commandService.findByCommand(idCommand));
+			this.commandService.deleteCommand(this.commandService.findByIdCommand(idCommand));
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch(Exception e) {
 			System.out.println(e);

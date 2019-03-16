@@ -44,14 +44,12 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 	}
 
 	@Override
-	public FacilityCategory updateFacilityCategory(String facilityCategoryName, String quantity, String price,
-			String description, String image) {
+	public FacilityCategory updateFacilityCategory(String nameFacilityCategory, String quantityFacilityCategory,
+			String priceFacilityCategory) {
 		// TODO Auto-generated method stub
-		FacilityCategory facilityCategoryToUpdate = this.facilityCategoryRepo.findByFacilityCategoryName(facilityCategoryName);
-		facilityCategoryToUpdate.setQuantity(Integer.parseInt(quantity));
-		facilityCategoryToUpdate.setPrice(Float.parseFloat(price));
-		facilityCategoryToUpdate.setDescription(description);
-		facilityCategoryToUpdate.setImage(image);
+		FacilityCategory facilityCategoryToUpdate = this.facilityCategoryRepo.findByFacilityCategoryName(nameFacilityCategory);
+		facilityCategoryToUpdate.setQuantityFacilityCategory((Integer.parseInt(quantityFacilityCategory)));
+		facilityCategoryToUpdate.setPriceFacilityCategory((Float.parseFloat(priceFacilityCategory)));
 		return this.facilityCategoryRepo.save(facilityCategoryToUpdate);
 	}
 

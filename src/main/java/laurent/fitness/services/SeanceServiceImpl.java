@@ -40,7 +40,7 @@ public class SeanceServiceImpl implements SeanceService {
 		Command command = this.commandRepo.findByCommand(idCommand);
 		commands.add(command);
 		
-		return this.seanceRepo.save(new Seance(commands, customer));
+		return this.seanceRepo.save(new Seance(commands, "Seance", customer));
 	}
 
 	@Override

@@ -23,16 +23,12 @@ public class FacilityCategory implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idFacilityCategory;
 
-	@Lob
-	private String description;
+	private String nameFacilityCategory;
 
-	private String facilityCategoryName;
+	private float priceFacilityCategory;
 
-	private String image;
+	private int quantityFacilityCategory;
 
-	private float price;
-
-	private int quantity;
 
 	//bi-directional many-to-one association to Facility
 	@OneToMany(mappedBy="facilityCategory")
@@ -48,24 +44,17 @@ public class FacilityCategory implements Serializable {
 	public FacilityCategory() {
 	}
 	
-	public FacilityCategory(String facilityCategoryName, int quantity) {
-		this.facilityCategoryName = facilityCategoryName;
-		this.quantity = quantity;
+	public FacilityCategory(String nameFacilityCategory, int quantityFacilityCategory) {
+		this.nameFacilityCategory = nameFacilityCategory;
+		this.quantityFacilityCategory = quantityFacilityCategory;
 	}
 	
-	public FacilityCategory(String facilityCategoryName, int quantity, String description) {
-		this.facilityCategoryName = facilityCategoryName;
-		this.quantity = quantity;
-		this.description = description;
+	public FacilityCategory(String nameFacilityCategory, int quantityFacilityCategory, float priceFacilityCategory) {
+		this.nameFacilityCategory = nameFacilityCategory;
+		this.quantityFacilityCategory = quantityFacilityCategory;
+		this.priceFacilityCategory = priceFacilityCategory;
 	}
 	
-	public FacilityCategory(String facilityCategoryName, int quantity, String description, String image) {
-		this.facilityCategoryName = facilityCategoryName;
-		this.quantity = quantity;
-		this.description = description;
-		this.image = image;
-	}
-
 	public int getIdFacilityCategory() {
 		return this.idFacilityCategory;
 	}
@@ -74,44 +63,28 @@ public class FacilityCategory implements Serializable {
 		this.idFacilityCategory = idFacilityCategory;
 	}
 
-	public String getDescription() {
-		return this.description;
+	public String getNameFacilityCategory() {
+		return nameFacilityCategory;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setNameFacilityCategory(String nameFacilityCategory) {
+		this.nameFacilityCategory = nameFacilityCategory;
 	}
 
-	public String getFacilityCategoryName() {
-		return this.facilityCategoryName;
+	public float getPriceFacilityCategory() {
+		return priceFacilityCategory;
 	}
 
-	public void setFacilityCategoryName(String facilityCategoryName) {
-		this.facilityCategoryName = facilityCategoryName;
+	public void setPriceFacilityCategory(float priceFacilityCategory) {
+		this.priceFacilityCategory = priceFacilityCategory;
 	}
 
-	public String getImage() {
-		return this.image;
+	public int getQuantityFacilityCategory() {
+		return quantityFacilityCategory;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public float getPrice() {
-		return this.price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
-	}
-
-	public int getQuantity() {
-		return this.quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setQuantityFacilityCategory(int quantityFacilityCategory) {
+		this.quantityFacilityCategory = quantityFacilityCategory;
 	}
 
 	@JsonIgnore

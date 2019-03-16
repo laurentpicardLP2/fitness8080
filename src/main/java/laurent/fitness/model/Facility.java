@@ -23,7 +23,13 @@ public class Facility implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idFacility;
 
-	private String facilityName;
+	private String nameFacility;
+	
+	@Lob
+	private String descriptionFacility;
+
+
+	private String imageFacility;
 
 	//bi-directional many-to-one association to Room
 	@ManyToOne
@@ -50,10 +56,27 @@ public class Facility implements Serializable {
 	public Facility() {
 	}
 	
-	public Facility(String facilityName, Room room, FacilityCategory facilityCategory) {
-		this.facilityName = facilityName;
+	public Facility(String nameFacility, Room room, FacilityCategory facilityCategory) {
+		this.nameFacility = nameFacility;
 		this.room = room;
 		this.facilityCategory = facilityCategory;
+	}
+	
+	public Facility(String nameFacility, Room room, FacilityCategory facilityCategory, String descriptionFacility) {
+		this.nameFacility = nameFacility;
+		this.room = room;
+		this.facilityCategory = facilityCategory;
+		this.descriptionFacility = descriptionFacility;
+		
+	}
+	
+	public Facility(String nameFacility, Room room, FacilityCategory facilityCategory, String descriptionFacility, String imageFacility) {
+		this.nameFacility = nameFacility;
+		this.room = room;
+		this.facilityCategory = facilityCategory;
+		this.descriptionFacility = descriptionFacility;
+		this.imageFacility = imageFacility;
+		
 	}
 
 	public int getIdFacility() {
@@ -64,12 +87,28 @@ public class Facility implements Serializable {
 		this.idFacility = idFacility;
 	}
 
-	public String getFacilityName() {
-		return this.facilityName;
+	public String getNameFacility() {
+		return nameFacility;
 	}
 
-	public void setFacilityName(String facilityName) {
-		this.facilityName = facilityName;
+	public void setNameFacility(String nameFacility) {
+		this.nameFacility = nameFacility;
+	}
+
+	public String getDescriptionFacility() {
+		return descriptionFacility;
+	}
+
+	public void setDescriptionFacility(String descriptionFacility) {
+		this.descriptionFacility = descriptionFacility;
+	}
+
+	public String getImageFacility() {
+		return imageFacility;
+	}
+
+	public void setImageFacility(String imageFacility) {
+		this.imageFacility = imageFacility;
 	}
 
 	public Room getRoom() {

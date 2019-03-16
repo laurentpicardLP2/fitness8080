@@ -8,5 +8,5 @@ public interface CommandService {
 	public List<Command> getAllCommands();
 	public Command saveCommand(Command command);
 	public void deleteCommand(Command command);
-	public Command findByCommand(int idCommand);
+	public Command findByIdCommand(int idCommand);
 }

@@ -35,6 +35,10 @@ public class Subscription extends Item implements Serializable {
 	public Subscription(List<Command> commands) {
 		super(commands);
 	}
+	
+	public Subscription(List<Command> commands, String typeItem) {
+		super(commands, typeItem);
+	}
 
 	public Customer getCustomer() {
 		return this.customer;

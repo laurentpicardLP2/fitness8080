@@ -76,10 +76,11 @@ public class FacilityCategoryControllerPostman {
 	
 	//Add a new category of facility
 	@PostMapping("/addfacilitycategory")
-	public ResponseEntity<?> addFacilityCategory(@Valid String facilityCategoryName, @Valid String quantity, @Valid String description) {
+	public ResponseEntity<?> addFacilityCategory(@Valid String nameFacilityCategory, @Valid String quantityFacilityCategory,  @Valid String priceFacilityCategory) {
 		try {
-			this.facilityCategoryService.saveFacilityCategory(
-					new FacilityCategory(facilityCategoryName, Integer.parseInt(quantity), description));
+			FacilityCategory facilityCategory = new FacilityCategory(nameFacilityCategory, Integer.parseInt(quantityFacilityCategory), Float.parseFloat(priceFacilityCategory));
+			this.facilityCategoryService.saveFacilityCategory(facilityCategory);
+			
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 		
 		} catch(Exception e) {
@@ -92,13 +93,11 @@ public class FacilityCategoryControllerPostman {
 	// Update a category of facility
 		@PutMapping("/updatefacilitycategory")
 		public ResponseEntity<?> updateFacilityCategory(
-				@Valid String facilityCategoryName, 
-				@Valid String quantity,
-				@Valid String price,
-				@Valid String description,
-				@Valid String image){
+				@Valid String nameFacilityCategory, 
+				@Valid String quantityFacilityCategory,
+				@Valid String priceFacilityCategory){
 			try {
-				this.facilityCategoryService.updateFacilityCategory(facilityCategoryName, quantity, price, description, image);
+				this.facilityCategoryService.updateFacilityCategory(nameFacilityCategory, quantityFacilityCategory,priceFacilityCategory);
 				return ResponseEntity.status(HttpStatus.OK).body(null);
 			} catch(Exception e) {
 				System.out.println(e);

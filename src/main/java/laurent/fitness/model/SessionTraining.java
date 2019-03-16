@@ -23,6 +23,8 @@ public class SessionTraining extends Item implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateTime;
+	
+	private float priceSessionTraining;
 
 	//bi-directional many-to-one association to Room
 	@ManyToOne
@@ -56,6 +58,10 @@ public class SessionTraining extends Item implements Serializable {
 	public SessionTraining(List<Command> commands) {
 		super(commands);
 	}
+	
+	public SessionTraining(List<Command> commands, String typeItem) {
+		super(commands, typeItem);
+	}
 
 	public int getCapacityAttendant() {
 		return this.capacityAttendant;
@@ -71,6 +77,14 @@ public class SessionTraining extends Item implements Serializable {
 
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
+	}
+	
+	public float getPriceSessionTraining() {
+		return this.priceSessionTraining;
+	}
+
+	public void setPriceSessionTraining(float priceSessionTraining) {
+		this.priceSessionTraining = priceSessionTraining;
 	}
 
 	public Room getRoom() {

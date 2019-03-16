@@ -22,6 +22,8 @@ public class Item implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected int idItem;
+	
+	private String typeItem;
 
 	protected float price;
 
@@ -43,14 +45,24 @@ public class Item implements Serializable {
 	}
 	
 	public Item(List<Command> commands) {
-		setCommands(commands);
+		this.commands = commands;
 	}
 	
 	public Item(List<Command> commands, float price) {
-		setCommands(commands);
-		setPrice(price);
+		this.commands = commands;
+		this.price = price;
 	}
-
+	
+	public Item(List<Command> commands, String typeItem) {
+		this.commands = commands;
+		this.typeItem = typeItem;
+	}
+	
+	public Item(List<Command> commands, String typeItem, float price) {
+		this.commands = commands;
+		this.typeItem = typeItem;
+		this.price = price;
+	}
 
 	public int getIdItem() {
 		return this.idItem;
@@ -58,6 +70,14 @@ public class Item implements Serializable {
 
 	public void setIdItem(int idItem) {
 		this.idItem = idItem;
+	}
+	
+	public String getTypeItem() {
+		return this.typeItem;
+	}
+
+	public void setTypeItem(String typeItem) {
+		this.typeItem = typeItem;
 	}
 
 	public float getPrice() {

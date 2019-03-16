@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.List;
 
@@ -17,8 +18,12 @@ import java.util.List;
 public class ConnectedWatch extends Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String modelWatch;
-
+	//bi-directional many-to-one association to ConnectedWatchCategory
+	@ManyToOne
+	@JoinColumn(name="ConnectedWatchCategory_idConnectedWatchCategory")
+	@JsonManagedReference
+	private ConnectedWatchCategory connectedWatchCategory;
+		
 	//bi-directional many-to-one association to Customer
 	@ManyToOne
 	@JoinColumn(name="Customer_Users_username")
@@ -31,13 +36,17 @@ public class ConnectedWatch extends Item implements Serializable {
 	public ConnectedWatch(List<Command> commands) {
 		super(commands);
 	}
-
-	public String getModelWatch() {
-		return this.modelWatch;
+	
+	public ConnectedWatch(List<Command> commands, String typeItem) {
+		super(commands, typeItem);
 	}
 
-	public void setModelWatch(String modelWatch) {
-		this.modelWatch = modelWatch;
+	public ConnectedWatchCategory getConnectedWatchCategory() {
+		return this.connectedWatchCategory;
+	}
+
+	public void setConnectedWatchCategory(ConnectedWatchCategory connectedWatchCategory) {
+		this.connectedWatchCategory = connectedWatchCategory;
 	}
 
 	public Customer getCustomer() {

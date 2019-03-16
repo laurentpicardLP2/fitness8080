@@ -11,7 +11,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import laurent.fitness.model.Facility;
 
 public class FacilityAvailableAdaptater {
-	private String facilityCategoryName;
+	private String nameFacilityCategory;
+	private float priceFacilityCategory;
 	private int quantityAvailable;
 	private List<Facility> facilities;
 	
@@ -20,19 +21,30 @@ public class FacilityAvailableAdaptater {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public FacilityAvailableAdaptater(String facilityCategoryName, int quantityAvailable, List<Facility> facilities) {
+	public FacilityAvailableAdaptater(String nameFacilityCategory, float priceFacilityCategory, int quantityAvailable, List<Facility> facilities) {
 		super();
-		this.facilityCategoryName = facilityCategoryName;
+		this.nameFacilityCategory = nameFacilityCategory;
+		this.priceFacilityCategory = priceFacilityCategory;
 		this.quantityAvailable = quantityAvailable;
 		this.facilities = facilities;
+	}	
+	
+	public String getNameFacilityCategory() {
+		return nameFacilityCategory;
 	}
 
-	public String getFacilityCategoryName() {
-		return facilityCategoryName;
+	public void setNameFacilityCategory(String nameFacilityCategory) {
+		this.nameFacilityCategory = nameFacilityCategory;
 	}
-	public void setFacilityCategoryName(String facilityCategoryName) {
-		this.facilityCategoryName = facilityCategoryName;
+
+	public float getPriceFacilityCategory() {
+		return priceFacilityCategory;
 	}
+
+	public void setPriceFacilityCategory(float priceFacilityCategory) {
+		this.priceFacilityCategory = priceFacilityCategory;
+	}
+
 	public int getQuantityAvailable() {
 		return quantityAvailable;
 	}

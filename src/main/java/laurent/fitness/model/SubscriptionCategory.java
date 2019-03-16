@@ -21,11 +21,11 @@ public class SubscriptionCategory implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idSubscriptionCategory;
 
-	private String subscriptionLast;
+	private String lastSubscription;
 
-	private String subscriptionName;
+	private String nameSubscription;
 
-	private String subscriptionPrice;
+	private String priceSubscription;
 
 	//bi-directional many-to-one association to Subscription
 	@OneToMany(mappedBy="subscriptionCategory")
@@ -43,28 +43,28 @@ public class SubscriptionCategory implements Serializable {
 		this.idSubscriptionCategory = idSubscriptionCategory;
 	}
 
-	public String getSubscriptionLast() {
-		return this.subscriptionLast;
+	public String getLastSubscription() {
+		return lastSubscription;
 	}
 
-	public void setSubscriptionLast(String subscriptionLast) {
-		this.subscriptionLast = subscriptionLast;
+	public void setLastSubscription(String lastSubscription) {
+		this.lastSubscription = lastSubscription;
 	}
 
-	public String getSubscriptionName() {
-		return this.subscriptionName;
+	public String getNameSubscription() {
+		return nameSubscription;
 	}
 
-	public void setSubscriptionName(String subscriptionName) {
-		this.subscriptionName = subscriptionName;
+	public void setNameSubscription(String nameSubscription) {
+		this.nameSubscription = nameSubscription;
 	}
 
-	public String getSubscriptionPrice() {
-		return this.subscriptionPrice;
+	public String getPriceSubscription() {
+		return priceSubscription;
 	}
 
-	public void setSubscriptionPrice(String subscriptionPrice) {
-		this.subscriptionPrice = subscriptionPrice;
+	public void setPriceSubscription(String priceSubscription) {
+		this.priceSubscription = priceSubscription;
 	}
 
 	public List<Subscription> getSubscriptions() {

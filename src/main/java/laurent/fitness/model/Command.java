@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
@@ -35,16 +36,20 @@ public class Command implements Serializable {
 //bi-directional many-to-one association to Customer
 	@ManyToOne
 	@JoinColumn(name="Customer_Users_username")
-	@JsonManagedReference
+	@JsonIgnore
 	private Customer customer;
 
 	//bi-directional many-to-many association to Item
 	@ManyToMany(mappedBy="commands", cascade=CascadeType.REMOVE)
-	@JsonManagedReference
+	
 	private List<Item> items;
 
 	public Command() {
 		this.items = new ArrayList<Item>();
+	}
+	
+	public Command(List<Item> items) {
+		this.items = items;
 	}
 	
 	public Command(Customer customer) {
