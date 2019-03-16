@@ -89,7 +89,6 @@ public class CommandController {
 			for(Item item : tmpCommand.getItems()) {
 				System.out.println("item : " + item.getIdItem());
 				System.out.println("item : " + item.getPrice());
-				
 			}
 			
 			this.commandService.saveCommand(command);
