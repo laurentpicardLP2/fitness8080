@@ -38,7 +38,7 @@ public class SeanceController {
 	public ResponseEntity<?> addSeance(@PathVariable int idCommand, @PathVariable String username) {
 
 		try {
-			Seance newSeance = this.seanceService.saveSeance(idCommand, username);
+			Seance newSeance = this.seanceService.createSeance(idCommand, username, 0f);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(newSeance);
 		

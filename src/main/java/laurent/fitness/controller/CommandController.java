@@ -1,6 +1,7 @@
 package laurent.fitness.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import laurent.fitness.model.Command;
 import laurent.fitness.model.Customer;
 import laurent.fitness.model.Item;
+import laurent.fitness.model.Seance;
 import laurent.fitness.model.User;
 import laurent.fitness.services.CommandService;
 import laurent.fitness.services.CustomerService;
+import laurent.fitness.services.ItemService;
+import laurent.fitness.services.SeanceService;
 import laurent.fitness.services.UserService;
 
 @RestController
@@ -30,10 +34,12 @@ import laurent.fitness.services.UserService;
 public class CommandController {
 	private CommandService commandService;
 	private CustomerService customerService;
+	private SeanceService seanceService;
 	
-	public CommandController(CommandService commandService, CustomerService customerService) {
+	public CommandController(CommandService commandService, CustomerService customerService, SeanceService seanceService) {
 		this.commandService = commandService;
 		this.customerService = customerService;
+		this.seanceService = seanceService;
 	}
 	
 	//Initialise une commande lorsqu'un utilisateur se connecte
@@ -81,40 +87,20 @@ public class CommandController {
 	public ResponseEntity<?> validateCommand(@RequestBody Command command){
 	
 		try {
-			
-			Command tmpCommand = this.commandService.findByIdCommand(command.getIdCommand());
-			
-			System.out.println("command item : " + command.getIdCommand());
-			
-			for(Item item : tmpCommand.getItems()) {
-				System.out.println("item : " + item.getIdItem());
-				System.out.println("item : " + item.getPrice());
+						
+			for(Item item : command.getItems()) {
+				Seance tmpSeance = this.seanceService.findSeanceById(item.getIdItem());
+				tmpSeance.setPrice(item.getPrice());
+				//this.seanceService.saveSeance(command.getIdCommand(), command.getCustomer().get, item.getPrice());				
 			}
 			
 			this.commandService.saveCommand(command);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(command);
-//			this.commandService.deleteCommand(this.commandService.findByIdCommand(idCommand));
-//			Customer customer = this.customerService.findByUsername(username);
-//			return ResponseEntity.status(HttpStatus.OK).body(this.commandService.saveCommand(new Command(customer, new Date())));
 		} catch(Exception e) {
 			System.out.println(e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
 		}
 	}
 	
-	// Validation du panier : maj en base des prix des différents items du panier
-	@GetMapping("/validatecommand/{idCommand}")
-	public Command GetCommand(@PathVariable int idCommand){
-	
-		try {
-			return this.commandService.findByIdCommand(idCommand);
-		} catch(Exception e) {
-			System.out.println(e);
-			return null;
-		}
-	}
-	
-	
-
 }

@@ -33,20 +33,34 @@ public class SeanceServiceImpl implements SeanceService {
 	}
 
 	@Override
-	public Seance saveSeance(int idCommand, String username) {
+	public Seance createSeance(int idCommand, String username, float price) {
 		// TODO Auto-generated method stub
 		List<Command> commands = new ArrayList<Command>();
 		Customer customer = this.customerRepo.findByUsername(username);
-		Command command = this.commandRepo.findByCommand(idCommand);
+		Command command = this.commandRepo.findByIdCommand(idCommand);
 		commands.add(command);
 		
-		return this.seanceRepo.save(new Seance(commands, "Seance", customer));
+		return this.seanceRepo.save(new Seance(commands, "Séance", customer, price));
 	}
+	
+	@Override
+	public Seance updateSeance(Seance seance) {
+		// TODO Auto-generated method stub
+		return this.seanceRepo.save(seance);
+	}
+	
+	
 
 	@Override
 	public void deleteSeance(int idItem) {
 		// TODO Auto-generated method stub
 		this.seanceRepo.delete(this.seanceRepo.findByIdItem(idItem));
+	}
+
+	@Override
+	public Seance findSeanceById(int idItem) {
+		// TODO Auto-generated method stub
+		return this.seanceRepo.findByIdItem(idItem);
 	}
 
 }

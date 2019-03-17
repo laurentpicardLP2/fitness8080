@@ -36,12 +36,10 @@ public class Command implements Serializable {
 //bi-directional many-to-one association to Customer
 	@ManyToOne
 	@JoinColumn(name="Customer_Users_username")
-	@JsonIgnore
 	private Customer customer;
 
 	//bi-directional many-to-many association to Item
 	@ManyToMany(mappedBy="commands", cascade=CascadeType.REMOVE)
-	
 	private List<Item> items;
 
 	public Command() {

@@ -30,7 +30,7 @@ public class SeanceControllerPostman {
 	@PostMapping("/addseance")
 	public ResponseEntity<?> addSeance(@Valid int idCommand, @Valid String username) {
 		try {
-			Seance newSeance = this.seanceService.saveSeance(idCommand, username);
+			Seance newSeance = this.seanceService.createSeance(idCommand, username, 0f);
 		
 			return ResponseEntity.status(HttpStatus.OK).body(newSeance);
 		

@@ -36,4 +36,10 @@ public class ItemServiceImpl implements ItemService {
 		this.itemRepo.delete(this.itemRepo.findById(idItem).get());
 	}
 
+	@Override
+	public Item findItemById(int idItem) {
+		// TODO Auto-generated method stub
+		return this.findItemById(idItem);
+	}
+
 }

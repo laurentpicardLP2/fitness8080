@@ -37,7 +37,13 @@ public class CommandServiceImpl implements CommandService {
 	@Override
 	public Command findByIdCommand(int idCommand) {
 		// TODO Auto-generated method stub
-		return this.commandRepo.findByCommand(idCommand);
+		return this.commandRepo.findByIdCommand(idCommand);
+	}
+
+	@Override
+	public List<Command> findCommandByUsername(String username) {
+		// TODO Auto-generated method stub
+		return this.commandRepo.findCommandByUsername(username);
 	}
 
 }
