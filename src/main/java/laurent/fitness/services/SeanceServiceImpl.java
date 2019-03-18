@@ -1,6 +1,7 @@
 package laurent.fitness.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -44,9 +45,12 @@ public class SeanceServiceImpl implements SeanceService {
 	}
 	
 	@Override
-	public Seance updateSeance(Seance seance) {
+	public Seance updateSeance(int idItem) {
 		// TODO Auto-generated method stub
-		return this.seanceRepo.save(seance);
+		Seance updatedSeance = this.findSeanceById(idItem);
+		updatedSeance.setDateOfSeance(this.findByDateOfTimestamp(idItem));
+		updatedSeance.setNbTimestamp(this.findNbTimestampBySeance(idItem));
+		return this.seanceRepo.save(updatedSeance);
 	}
 	
 	
@@ -61,6 +65,24 @@ public class SeanceServiceImpl implements SeanceService {
 	public Seance findSeanceById(int idItem) {
 		// TODO Auto-generated method stub
 		return this.seanceRepo.findByIdItem(idItem);
+	}
+
+	@Override
+	public Date findByDateOfTimestamp(int idItem) {
+		// TODO Auto-generated method stub
+		return this.seanceRepo.findByDateOfTimestamp(idItem);
+	}
+
+	@Override
+	public int findNbTimestampBySeance(int idItem) {
+		// TODO Auto-generated method stub
+		return this.seanceRepo.findNbTimestampBySeance(idItem);
+	}
+
+	@Override
+	public List<Seance> findSeancesByUsername(String username) {
+		// TODO Auto-generated method stub
+		return this.seanceRepo.findSeancesByUsername(username);
 	}
 
 }

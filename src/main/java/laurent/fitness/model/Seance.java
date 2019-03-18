@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,6 +29,11 @@ public class Seance extends Item implements Serializable {
 	private Customer customer;
 
 	private int statusSeance;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateOfSeance;
+	
+	private int nbTimestamp;
 
 	//bi-directional many-to-one association to TimestampFacility
 	@OneToMany(mappedBy="seance", cascade=CascadeType.REMOVE)
@@ -68,6 +74,22 @@ public class Seance extends Item implements Serializable {
 
 	public void setStatusSeance(int statusSeance) {
 		this.statusSeance = statusSeance;
+	}
+	
+	public Date getDateOfSeance() {
+		return this.dateOfSeance;
+	}
+
+	public void setDateOfSeance(Date dateOfSeance) {
+		this.dateOfSeance = dateOfSeance;
+	}
+	
+	public int getNbTimestamp() {
+		return this.nbTimestamp;
+	}
+
+	public void setNbTimestamp(int nbTimestamp) {
+		this.nbTimestamp = nbTimestamp;
 	}
 	
 	public List<TimestampFacility> getTimestampFacilities() {

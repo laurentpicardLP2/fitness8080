@@ -1,5 +1,6 @@
 package laurent.fitness.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -39,12 +40,12 @@ public class TimestampFacilityServiceImpl implements TimestampFacilityService {
 	}
 
 	@Override
-	public TimestampFacility saveNewTimestampFacility(int idItem, String refTimestamp, String facilityName, String facilityCategoryName) {
+	public TimestampFacility saveNewTimestampFacility(int idItem, String refTimestamp, String facilityName, String facilityCategoryName, Date dateOfTimestamp) {
 		// TODO Auto-generated method stub
 		Seance seance = this.seanceRepo.findByIdItem(idItem);
 		Facility facility = this.facilityRepo.findByFacilityName(facilityName);
 		FacilityCategory facilityCategory = this.facilityCategoryRepo.findByFacilityCategoryName(facilityCategoryName);
-		TimestampFacility timestampFacility = new TimestampFacility(seance, refTimestamp, facility, facilityCategory);
+		TimestampFacility timestampFacility = new TimestampFacility(seance, refTimestamp, facility, facilityCategory, dateOfTimestamp);
 		return this.timestampFacilityRepo.save(timestampFacility);
 	}
 
@@ -65,6 +66,13 @@ public class TimestampFacilityServiceImpl implements TimestampFacilityService {
 	public int findByFacilityCategoryCount(String facilityCategoryName, String timestamp) {
 		// TODO Auto-generated method stub
 		return this.timestampFacilityRepo.findByFacilityCategoryCount(facilityCategoryName, timestamp);
+	}
+
+	@Override
+	public List<TimestampFacility> findTimestampByIdItem(int idItem) {
+		// TODO Auto-generated method stub
+		return this.timestampFacilityRepo.findTimestampByIdSeance(idItem);
+
 	}
 
 }

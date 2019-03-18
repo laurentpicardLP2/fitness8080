@@ -1,5 +1,7 @@
 package laurent.fitness.controller.postman;
 
+import java.sql.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ public class TimestampFacilityControllerPostman {
 	}
 	
 	//Add a new timestampFacility
+	@SuppressWarnings("deprecation")
 	@PostMapping("/addtimestampfacility")
 	public ResponseEntity<?> addTimestampFacility(
 				@Valid int idItem,
@@ -30,7 +33,7 @@ public class TimestampFacilityControllerPostman {
 				@Valid String facilityCategoryName) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(
-					this.timestampFacilityService.saveNewTimestampFacility(idItem, refTimestamp, facilityName, facilityCategoryName));
+					this.timestampFacilityService.saveNewTimestampFacility(idItem, refTimestamp, facilityName, facilityCategoryName, new Date(2019, 3, 12)));
 		
 		} catch(Exception e) {
 			

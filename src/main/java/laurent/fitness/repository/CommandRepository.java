@@ -12,5 +12,5 @@ public interface CommandRepository extends JpaRepository<Command, Integer> {
 	Command findByIdCommand(int idCommand);
 	
 	@Query(value = "SELECT * FROM command WHERE customer_users_username like %?1% ORDER BY date_of_command DESC ", nativeQuery = true)
-	List<Command> findCommandByUsername(String username);
+	List<Command> findCommandsByUsername(String username);
 }

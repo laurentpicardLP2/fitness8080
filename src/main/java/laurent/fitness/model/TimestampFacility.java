@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -25,6 +26,9 @@ public class TimestampFacility implements Serializable {
 	private int idTimestampFacility;
 	
 	private String refTimestamp;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateOfTimestamp;
 
 	//bi-directional many-to-one association to Facility
 	@ManyToOne
@@ -48,11 +52,12 @@ public class TimestampFacility implements Serializable {
 	public TimestampFacility() {
 	}
 
-    public TimestampFacility(Seance seance, String refTimestamp, Facility facility, FacilityCategory facilityCategory) {
+    public TimestampFacility(Seance seance, String refTimestamp, Facility facility, FacilityCategory facilityCategory, Date dateOfTimestamp) {
     	this.seance = seance;
 		this.refTimestamp = refTimestamp;
 		this.facility = facility;
 		this.facilityCategory = facilityCategory;
+		this.dateOfTimestamp = dateOfTimestamp;
 	}
 
 	public int getIdTimestampFacility() {
@@ -69,6 +74,14 @@ public class TimestampFacility implements Serializable {
 
 	public void setRefTimestamp(String refTimestamp) {
 		this.refTimestamp = refTimestamp;
+	}
+	
+	public Date getDateOfTimestamp() {
+		return this.dateOfTimestamp;
+	}
+
+	public void setDateOfTimestamp(Date dateOfTimestamp) {
+		this.dateOfTimestamp = dateOfTimestamp;
 	}
 
 	public Facility getFacility() {

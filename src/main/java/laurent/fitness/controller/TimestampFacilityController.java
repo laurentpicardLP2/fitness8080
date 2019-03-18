@@ -1,5 +1,7 @@
 package laurent.fitness.controller;
 
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -25,15 +27,16 @@ private TimestampFacilityService timestampFacilityService;
 	}
 	
 	//Add a new timestampFacility
-	@PostMapping("/addtimestampfacility/{idItem}/{refTimestamp}/{facilityName}/{facilityCategoryName}")
+	@PostMapping("/addtimestampfacility/{idItem}/{refTimestamp}/{facilityName}/{facilityCategoryName}/{dateOfTimestamp}")
 	public ResponseEntity<?> addTimestampFacility(
 			@PathVariable int idItem,
 			@PathVariable String refTimestamp, 
 			@PathVariable String facilityName, 
-			@PathVariable String facilityCategoryName) {
+			@PathVariable String facilityCategoryName,
+			@PathVariable Date dateOfTimestamp) {
 		try {
 		return ResponseEntity.status(HttpStatus.OK).body(
-				this.timestampFacilityService.saveNewTimestampFacility(idItem, refTimestamp, facilityName, facilityCategoryName));
+				this.timestampFacilityService.saveNewTimestampFacility(idItem, refTimestamp, facilityName, facilityCategoryName, dateOfTimestamp));
 		
 		} catch(Exception e) {
 			
