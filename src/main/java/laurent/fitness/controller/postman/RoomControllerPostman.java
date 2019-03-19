@@ -22,9 +22,9 @@ public class RoomControllerPostman {
 	
 	//Add a new room
 	@PostMapping("/addroom")
-	public ResponseEntity<?> addRoom(@Valid String roomName, @Valid String capacity) {
+	public ResponseEntity<?> addRoom(@Valid String nameRoom, @Valid String capacity) {
 		try {
-			this.roomService.saveRoom(new Room(roomName, Integer.parseInt(capacity)));
+			this.roomService.saveRoom(new Room(nameRoom, Integer.parseInt(capacity)));
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 		
 		} catch(Exception e) {
@@ -36,9 +36,9 @@ public class RoomControllerPostman {
 	
 	// Update a room by Postman
 	@PutMapping("/updateroom")
-	public ResponseEntity<?> updateRoom(@Valid String roomName, @Valid String capacity){
+	public ResponseEntity<?> updateRoom(@Valid String nameRoom, @Valid String capacity){
 		try {
-			Room roomToUpdate = this.roomService.findByRoomName(roomName);
+			Room roomToUpdate = this.roomService.findByRoomName(nameRoom);
 			roomToUpdate.setCapacity(Integer.parseInt(capacity));
 			this.roomService.saveRoom(roomToUpdate);
 			return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -50,9 +50,9 @@ public class RoomControllerPostman {
 	
 	// Delete a room by Postman
 	@DeleteMapping("/delroom")
-	public ResponseEntity<?> delRoom(@Valid String roomName){
+	public ResponseEntity<?> delRoom(@Valid String nameRoom){
 		try {
-			this.roomService.deleteRoom(this.roomService.findByRoomName(roomName));
+			this.roomService.deleteRoom(this.roomService.findByRoomName(nameRoom));
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch(Exception e) {
 			System.out.println(e);

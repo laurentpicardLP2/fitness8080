@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import laurent.fitness.model.TimestampFacility;
+import laurent.fitness.model.adaptater.TimestampFacilityAdaptater;
 
 public interface TimestampFacilityService {
 	public List<TimestampFacility> getAllTimestampFacilities();
@@ -15,6 +16,4 @@ public interface TimestampFacilityService {
 	public void deleteTimestampFacility(int idTimestampFacillity);
 	
 	public int findByFacilityCategoryCount(String facilityCategoryName, String timestamp);
-	
-	public List<TimestampFacility> findTimestampByIdItem(int idItem);
 }

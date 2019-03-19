@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import laurent.fitness.model.Command;
 import laurent.fitness.model.Seance;
 import laurent.fitness.model.TimestampFacility;
+import laurent.fitness.model.adaptater.TimestampFacilityAdaptater;
+import laurent.fitness.repository.TimestampFacilityRepository;
 import laurent.fitness.services.CommandService;
 import laurent.fitness.services.CustomerService;
 import laurent.fitness.services.SeanceService;
+import laurent.fitness.services.TimestampFacilityAdaptaterService;
 import laurent.fitness.services.TimestampFacilityService;
 
 @RestController
@@ -22,12 +25,12 @@ import laurent.fitness.services.TimestampFacilityService;
 public class SyntheseController {
 
 	private CommandService commandService;
-	private TimestampFacilityService timestampFacilityService;
+	private TimestampFacilityAdaptaterService timestampFacilityAdaptaterService;
 	private SeanceService seanceService;
 	
-	public SyntheseController(CommandService commandService, SeanceService seanceService, TimestampFacilityService timestampFacilityService) {
+	public SyntheseController(CommandService commandService, SeanceService seanceService, TimestampFacilityAdaptaterService timestampFacilityAdaptaterService) {
 		this.commandService = commandService;
-		this.timestampFacilityService = timestampFacilityService;
+		this.timestampFacilityAdaptaterService = timestampFacilityAdaptaterService;
 		this.seanceService = seanceService;
 	}
 
@@ -57,10 +60,9 @@ public class SyntheseController {
 	
 	// Récupération des timestamp d'une séance (composition d'une séance)
 	@GetMapping("/gettimestampfromaseance/{idItem}")
-	public List<TimestampFacility> GetTimestampFromASeance(@PathVariable int idItem){
+	public List<TimestampFacilityAdaptater> GetTimestampFromASeance(@PathVariable int idItem){
 		try {
-			//return this.timestampFacilityService.findSeancesByUsername(username);
-			return this.timestampFacilityService.findTimestampByIdItem(idItem);
+			return this.timestampFacilityAdaptaterService.getTimestampFacilitiesForASeance(idItem);
 		} catch(Exception e) {
 			System.out.println(e);
 			return null;

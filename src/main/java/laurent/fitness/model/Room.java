@@ -24,7 +24,7 @@ public class Room implements Serializable {
 
 	private int capacity;
 
-	private String roomName;
+	private String nameRoom;
 
 	//bi-directional many-to-one association to Facility
 	@OneToMany(mappedBy="room")
@@ -39,8 +39,8 @@ public class Room implements Serializable {
 	public Room() {
 	}
 	
-	public Room(String roomName, int capacity) {
-		this.roomName = roomName;
+	public Room(String nameRoom, int capacity) {
+		this.nameRoom = nameRoom;
 		this.capacity = capacity;
 	}
 
@@ -60,12 +60,12 @@ public class Room implements Serializable {
 		this.capacity = capacity;
 	}
 
-	public String getRoomName() {
-		return this.roomName;
+	public String getNameRoom() {
+		return this.nameRoom;
 	}
 
-	public void setRoomName(String roomName) {
-		this.roomName = roomName;
+	public void setNameRoom(String nameRoom) {
+		this.nameRoom = nameRoom;
 	}
 
 	public List<Facility> getFacilities() {

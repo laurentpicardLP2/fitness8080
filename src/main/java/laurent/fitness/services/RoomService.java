@@ -12,5 +12,7 @@ public interface RoomService {
 	public void deleteRoom(Room room);
 	
 	public Room findByRoomName(String roomName);
+	
+	public Room findByIdRoom(int idRoom);
 
 }

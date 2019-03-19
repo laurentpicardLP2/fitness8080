@@ -68,4 +68,22 @@ public class FacilityServiceImpl implements FacilityService {
 		return this.facilityRepo.save(facilityToUpdate);
 	}
 
+	@Override
+	public Facility addFacility(int idFacilityCategory, int idRoom, String nameFacility, String descriptionFacility, String imageFacility) {
+		// TODO Auto-generated method stub
+		FacilityCategory facilityCategory = this.facilityCategoryRepo.findByIdFacilityCategory(idFacilityCategory);
+		Room facilityRoom = this.roomRepo.findByIdRoom(idRoom);
+		descriptionFacility = (descriptionFacility.equals("undefined")) ? "" : descriptionFacility;
+		imageFacility = (imageFacility.equals("undefined")) ? "" : imageFacility;
+		Facility saveNewFacility = new Facility(nameFacility, facilityRoom,facilityCategory, descriptionFacility, imageFacility);
+		this.facilityRepo.save(saveNewFacility);
+		
+		//mise à jour de la quantité(+1) pour la catégorie d'équipement à laquelle appartient la facility
+		int nbFacilityCategory = this.facilityRepo.findByFacilityCategoryCount(idFacilityCategory);
+		facilityCategory.setQuantityFacilityCategory(nbFacilityCategory);
+		this.facilityCategoryRepo.save(facilityCategory);
+		
+		return saveNewFacility;
+	}
+
 }

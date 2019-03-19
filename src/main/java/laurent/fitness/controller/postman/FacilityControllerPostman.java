@@ -28,11 +28,11 @@ public class FacilityControllerPostman {
 	//Add a new facility
 	@PostMapping("/addfacility")
 	public ResponseEntity<?> addFacility(
-			@Valid String facilityName, 
-			@Valid String roomName, 
-			@Valid String facilityCategoryName) {
+			@Valid String nameFacility, 
+			@Valid String nameRoom, 
+			@Valid String nameFacilityCategory) {
 		try {
-			this.facilityService.saveNewFacility(facilityName, roomName, facilityCategoryName);
+			this.facilityService.saveNewFacility(nameFacility, nameRoom, nameFacilityCategory);
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 		
 		} catch(Exception e) {

@@ -38,9 +38,9 @@ public class FacilityCategoryController {
 		this.facilityAvailableAdaptaterService = facilityAvailableAdaptaterService;
 	}
 	
-	//Return the list if categories facilities available for a timestamp
-	@GetMapping("/getfacilitycategories/{timestamp}")
-	public ResponseEntity<?> getFacilityCategories(@PathVariable String timestamp) {
+	//Return the list of categories facilities available for a timestamp
+	@GetMapping("/getfacilitycategoriesavailable/{timestamp}")
+	public ResponseEntity<?> getFacilityCategoriesAvailable(@PathVariable String timestamp) {
 		List<FacilityAvailableAdaptater> listeFacilitiesAvailable = null;
 		try {
 			listeFacilitiesAvailable = this.facilityAvailableAdaptaterService.getFacilitiesAvailable(timestamp);			

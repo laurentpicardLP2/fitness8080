@@ -50,8 +50,6 @@ private TimestampFacilityService timestampFacilityService;
 	public ResponseEntity<?> getQuantityAvailableFacilities(@PathVariable String facilityName, @PathVariable String refTimestamp) {
 		try {
 			int nbAvailableFacilities = this.timestampFacilityService.findByFacilityCategoryCount(facilityName, refTimestamp);
-			System.out.println("refTimestamp : " + refTimestamp);
-			System.out.println("nbAvailableFacilities : " + nbAvailableFacilities);
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 		
 		} catch(Exception e) {

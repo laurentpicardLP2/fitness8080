@@ -1,6 +1,9 @@
 package laurent.fitness.services;
 
 import java.util.List;
+
+import org.springframework.web.bind.annotation.PathVariable;
+
 import laurent.fitness.model.Facility;
 
 public interface FacilityService {
@@ -15,4 +18,7 @@ public interface FacilityService {
 	public void deleteFacility(Facility facility);
 	
 	public Facility findByFacilityName(String facilityName);
+	
+	public Facility addFacility(int idFacilityCategory, int idRoom, String nameFacility, String descriptionFacility, String imageFacility);
+	
 }

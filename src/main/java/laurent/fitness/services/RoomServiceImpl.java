@@ -41,4 +41,10 @@ public class RoomServiceImpl implements RoomService {
 		return this.roomRepo.findByRoomName(roomName);
 	}
 
+	@Override
+	public Room findByIdRoom(int idRoom) {
+		// TODO Auto-generated method stub
+		return this.roomRepo.findByIdRoom(idRoom);
+	}
+
 }

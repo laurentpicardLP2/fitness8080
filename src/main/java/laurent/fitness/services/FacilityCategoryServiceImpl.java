@@ -53,6 +53,12 @@ public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 		return this.facilityCategoryRepo.save(facilityCategoryToUpdate);
 	}
 
+	@Override
+	public FacilityCategory findByIdFacilityCategory(int idFacilityCategory) {
+		// TODO Auto-generated method stub
+		return this.facilityCategoryRepo.findByIdFacilityCategory(idFacilityCategory);
+	}
+
 
 
 
