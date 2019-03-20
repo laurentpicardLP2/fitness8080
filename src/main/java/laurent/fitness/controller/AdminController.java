@@ -64,7 +64,7 @@ public class AdminController {
 	    if (multipartFile == null || multipartFile.isEmpty()) {
 	      throw new UploadFileException();
 	    }
-	    multipartFile.transferTo(new File("/home/laurent/node/fitness4200/src/assets/images/" + multipartFile.getOriginalFilename()));
+	    multipartFile.transferTo(new File("/home/laurent/node/fitness4200/src/assets/images/facilities/" + multipartFile.getOriginalFilename()));
 	    return new ResponseEntity<>(new FileInformation(multipartFile.getOriginalFilename(), multipartFile.getSize()), HttpStatus.CREATED);
 	  }
 	

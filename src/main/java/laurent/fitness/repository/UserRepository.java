@@ -22,6 +22,9 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	//@Query(value = "SELECT MAX(idUser) from User", nativeQuery = true)
 	@Query("SELECT u FROM User u WHERE u.idUser in (SELECT MAX(idUser) from User)")
 	 public User findByUsernameIdMax();
+	
+	@Query("SELECT u FROM User u WHERE u.idUser = ?1")
+	 public User findByIdUser(int idUser);
 }
 
 

@@ -44,11 +44,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int findByUsernameIdMax() {
 		// TODO Auto-generated method stub
-		int idUserMax = 0; // la gestion de l'auto-increment du champ idUser est manuelle car ce n'est pas une clé primaire
+		int idUserMax = Integer.valueOf(0); // la gestion de l'auto-increment du champ idUser est manuelle car ce n'est pas une clé primaire
 		try {
 			idUserMax = this.userRepo.findByUsernameIdMax().getIdUser() + 1; 
 		}catch (Exception e) {
-			idUserMax = 1;
+			idUserMax = Integer.valueOf(1);
 		}
 		return idUserMax;
 	}

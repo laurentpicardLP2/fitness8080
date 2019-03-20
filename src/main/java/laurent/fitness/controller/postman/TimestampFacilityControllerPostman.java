@@ -32,8 +32,9 @@ public class TimestampFacilityControllerPostman {
 				@Valid String facilityName, 
 				@Valid String facilityCategoryName) {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(
-					this.timestampFacilityService.saveNewTimestampFacility(idItem, refTimestamp, facilityName, facilityCategoryName, new Date(2019, 3, 12)));
+			return ResponseEntity.status(HttpStatus.OK).body(null);
+//			return ResponseEntity.status(HttpStatus.OK).body(
+//					this.timestampFacilityService.saveNewTimestampFacility(idItem, refTimestamp, facilityName, facilityCategoryName, new Date(2019, 3, 12)));
 		
 		} catch(Exception e) {
 			

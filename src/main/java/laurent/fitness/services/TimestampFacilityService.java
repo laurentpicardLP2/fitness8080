@@ -11,7 +11,7 @@ public interface TimestampFacilityService {
 	
 	public TimestampFacility saveTimestampFacility(TimestampFacility timestampFacility);
 	
-	public TimestampFacility saveNewTimestampFacility(int idItem, String refTimestamp, String facilityName, String facilityCategoryName, Date dateOfTimestamp);
+	public TimestampFacility saveNewTimestampFacility(int idItem, String refTimestamp, String facilityName, String facilityCategoryName);
 	
 	public void deleteTimestampFacility(int idTimestampFacillity);
 	

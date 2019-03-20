@@ -42,8 +42,9 @@ public class TimestampFacilityServiceImpl implements TimestampFacilityService {
 	}
 
 	@Override
-	public TimestampFacility saveNewTimestampFacility(int idItem, String refTimestamp, String facilityName, String facilityCategoryName, Date dateOfTimestamp) {
+	public TimestampFacility saveNewTimestampFacility(int idItem, String refTimestamp, String facilityName, String facilityCategoryName) {
 		// TODO Auto-generated method stub
+		Date dateOfTimestamp = getDateOfRefTimestamp(refTimestamp);
 		Seance seance = this.seanceRepo.findByIdItem(idItem);
 		Facility facility = this.facilityRepo.findByFacilityName(facilityName);
 		FacilityCategory facilityCategory = this.facilityCategoryRepo.findByFacilityCategoryName(facilityCategoryName);
@@ -69,4 +70,14 @@ public class TimestampFacilityServiceImpl implements TimestampFacilityService {
 		// TODO Auto-generated method stub
 		return this.timestampFacilityRepo.findByFacilityCategoryCount(facilityCategoryName, timestamp);
 	}
+	
+	public Date getDateOfRefTimestamp(String refTimestamp){
+	    String[] splitRefTimestamp = refTimestamp.split("_");
+	    int year = Integer.parseInt(splitRefTimestamp[0]);
+	    int month = Integer.parseInt(splitRefTimestamp[1])-1;
+	    int day = Integer.parseInt(splitRefTimestamp[2]);
+	    int hour = Integer.parseInt(splitRefTimestamp[3]);
+	    int minute = Integer.parseInt(splitRefTimestamp[4]);
+	    return new Date(year, month, day, hour, minute, 0);
+	  }
 }
