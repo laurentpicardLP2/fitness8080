@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import laurent.fitness.model.Authority;
 import laurent.fitness.model.User;
 import laurent.fitness.repository.AuthorityRepository;
 import laurent.fitness.repository.UserRepository;
@@ -57,6 +58,13 @@ public class UserServiceImpl implements UserService {
 	public User findByUsername(String username) {
 		// TODO Auto-generated method stub
 		return this.userRepo.findByUsername(username);
+	}
+
+	@Override
+	public Authority getAuthorityForAnUser(String username) {
+		// TODO Auto-generated method stub
+		User user = this.userRepo.findByUsername(username);
+		return user.getAuthority();
 	}
 
 }

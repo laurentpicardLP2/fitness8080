@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import laurent.fitness.model.AuthToken;
 import laurent.fitness.model.User;
 import laurent.fitness.repository.UserRepository;
+import laurent.fitness.security.JwtTokenProvider;
 import laurent.fitness.services.MapValidationErrorService;
 
 import io.jsonwebtoken.Jwts;
@@ -65,8 +66,8 @@ public class UserController {
 	@Autowired
     private MapValidationErrorService mapValidationErrorService;
 	
-	public static final String TOKEN_PREFIX = "Bearer ";
-	
+	@Autowired 
+	private JwtTokenProvider jwtTokenProvider;
 	
 	private AuthorityService authorityService;
 	private CustomerService customerService;
@@ -83,6 +84,12 @@ public class UserController {
 		this.staffService = staffService;
 		this.userService = userService;
 	}
+	
+	/**
+	 * Appel de la fonction lorqu'un nouvel utilisteur a remplit le formulaire d'inscription
+	 * @param newCustomer
+	 * @return
+	 */
 	
 	@PostMapping("/newcustomer")
 	public ResponseEntity<?> createCustomer(@RequestBody Customer newCustomer) {
@@ -106,7 +113,6 @@ public class UserController {
 	}
 		
 	
-	
 	@PostMapping("/newstaff/{role}")
 	public ResponseEntity<?> addStaff(@PathVariable String role) {			
 		return ResponseEntity.status(HttpStatus.OK).body(null);		
@@ -122,59 +128,53 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/authorities")
-	public List<Authority> getAllAuthorities() {
-		return this.authorityService.getAllAuthorities();
+	
+	/**
+	 * Fonction exécutée à connexion d'un utilisateur. Retourne un token valable pour une session stateless
+	 * @param user
+	 * @param result
+	 * @return
+	 */
+	@PostMapping("/login")
+	public ResponseEntity<?> authenticateUser(@RequestBody User user, BindingResult result){
+        
+		ResponseEntity<?> errorMap = mapValidationErrorService.mapValidationService(result);
+        if(errorMap != null)
+            return  errorMap;
+        
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
+        return ResponseEntity.ok(jwtTokenProvider.generateToken(authentication, user, this.userService));
 	}
+	
+	@GetMapping("/authority/{username}")
+	public ResponseEntity<?> authorityOfUser (@PathVariable String username){
+		
+		Authority authority = this.userService.getAuthorityForAnUser(username);
+		return ResponseEntity.ok(authority);
+	}
+	
+//	@GetMapping("/authorities")
+//	public List<Authority> getAllAuthorities() {
+//		return this.authorityService.getAllAuthorities();
+//	}
 	
 	
 	//temporary login process 
-	//@PostMapping("/login")
-	public ResponseEntity<?> userLogin(@RequestBody User pUser) {			
-		System.out.println("/login");
-		try {
-			User user = this.userService.findByUsername(pUser.getUsername());
-			System.out.println("username : " + user.getUsername());
-		return ResponseEntity.status(HttpStatus.OK).body(user);
-			
-		} catch(Exception e) {
-			
-			System.out.println(e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
-		}			
-	}
-	
-	@PostMapping("/login")
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody User user, BindingResult result){
-        ResponseEntity<?> errorMap = mapValidationErrorService.mapValidationService(result);
-        
-        if(errorMap != null)
-            return  errorMap;
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                		user.getUsername(),
-                		user.getPassword()
-                )
-        );
-        
-        user = usersRepo.findByUsername(user.getUsername()); // pour récupérer l'id
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        
-        Date now = new Date(System.currentTimeMillis());
-        Date expireDate = new Date(now.getTime() + TOKEN_EXPIRATION_TIME);
-        Map<String, Object>claims = new HashMap<>();
-        claims.put("id", (Long.toString(user.getIdUser())));
-        claims.put("username", user.getUsername());
-        claims.put("role",  authentication.getAuthorities());
-        String jwt =  TOKEN_PREFIX + Jwts.builder()
-                .setSubject(user.getUsername())
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-                .compact();
-
-        return ResponseEntity.ok(new AuthToken(jwt));
-	}
+		//@PostMapping("/login")
+//		public ResponseEntity<?> userLogin(@RequestBody User pUser) {			
+//			System.out.println("/login");
+//			try {
+//				User user = this.userService.findByUsername(pUser.getUsername());
+//				System.out.println("username : " + user.getUsername());
+//			return ResponseEntity.status(HttpStatus.OK).body(user);
+//				
+//			} catch(Exception e) {
+//				
+//				System.out.println(e);
+//				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
+//			}			
+//		}
+		
 
 }

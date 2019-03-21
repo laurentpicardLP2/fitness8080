@@ -33,55 +33,5 @@ import laurent.fitness.upload.exception.UploadFileException;
 @RequestMapping("/adminctrl")
 @CrossOrigin("http://localhost:4200")
 public class AdminController {
-	private FacilityService facilityService;
-	private FacilityCategoryService facilityCategoryService;
-	private RoomService roomService;
-	
-	public AdminController(FacilityService facilityService, FacilityCategoryService facilityCategoryService, RoomService roomService) {
-		this.facilityService = facilityService;
-		this.facilityCategoryService = facilityCategoryService;
-		this.roomService = roomService;
-	}
-	
-	//Return the list of rooms
-	@GetMapping("/getrooms")
-	public List<Room> getRooms() {
-		return this.roomService.getAllRooms();			
-	}
-	
-	//Return the list of categories facilities
-	@GetMapping("/getfacilitycategories")
-	public List<FacilityCategory> getFacilityCategories() {
-		return(this.facilityCategoryService.getAllFacilityCategories());			
-	}
-	
-	// upload a file and put it in /home/laurent/node/fitness4200/src/assets/images and memorize its name in DB
-	@PostMapping(value = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-	  public ResponseEntity<FileInformation> uploadFile(
-	      @RequestParam("data") MultipartFile multipartFile
-	  ) throws UploadFileException, IllegalStateException, IOException {
-		
-	    if (multipartFile == null || multipartFile.isEmpty()) {
-	      throw new UploadFileException();
-	    }
-	    multipartFile.transferTo(new File("/home/laurent/node/fitness4200/src/assets/images/facilities/" + multipartFile.getOriginalFilename()));
-	    return new ResponseEntity<>(new FileInformation(multipartFile.getOriginalFilename(), multipartFile.getSize()), HttpStatus.CREATED);
-	  }
-	
-	//Ajoute un facility dans la catégorie idFacilityCategory et la room idRoom + met à jour le nombre d'équipement
-	@PostMapping("/addfacility/{idFacilityCategory}/{idRoom}/{nameFacility}/{descriptionFacility}/{imageFacility}")
 
-	public ResponseEntity<?> addFacility(
-			@PathVariable int idFacilityCategory, 
-			@PathVariable int idRoom, 
-			@PathVariable String nameFacility,
-			@PathVariable String descriptionFacility,
-			@PathVariable String imageFacility) {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(this.facilityService.addFacility(idFacilityCategory, idRoom, nameFacility, descriptionFacility, imageFacility));
-		} catch(Exception e) {
-			System.out.println(e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
-		}			
-	}
 }

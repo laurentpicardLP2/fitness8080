@@ -73,6 +73,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 typeRole = typeRole.toString().split("=")[1];
                 typeRole = typeRole.toString().substring(0, typeRole.toString().length() - 1);
                 
+                System.out.println("typeRole : " + typeRole);
                 		
                 SimpleGrantedAuthority authority = new SimpleGrantedAuthority(typeRole.toString());
                 List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();

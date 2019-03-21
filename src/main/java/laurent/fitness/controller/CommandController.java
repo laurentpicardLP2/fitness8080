@@ -57,8 +57,8 @@ public class CommandController {
 	}
 	
 	// Delete a command
-	@DeleteMapping("/delcommand")
-	public ResponseEntity<?> delCommand(@Valid int idCommand){
+	@DeleteMapping("/delcommand/{idCommand}")
+	public ResponseEntity<?> delCommand(@PathVariable int idCommand){
 		try {
 			this.commandService.deleteCommand(this.commandService.findByIdCommand(idCommand));
 			return ResponseEntity.status(HttpStatus.OK).body(null);

@@ -2,6 +2,8 @@ package laurent.fitness.services;
 
 
 import java.util.List;
+
+import laurent.fitness.model.Authority;
 import laurent.fitness.model.User;
 
 public interface UserService {
@@ -14,5 +16,7 @@ public interface UserService {
 	public int findByUsernameIdMax();
 	
 	public User findByUsername(String username);
+	
+	public Authority getAuthorityForAnUser(String username);
 
 }
