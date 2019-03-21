@@ -1,6 +1,7 @@
 package laurent.fitness.services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -71,13 +72,18 @@ public class TimestampFacilityServiceImpl implements TimestampFacilityService {
 		return this.timestampFacilityRepo.findByFacilityCategoryCount(facilityCategoryName, timestamp);
 	}
 	
+	
 	public Date getDateOfRefTimestamp(String refTimestamp){
+		Calendar calendar = Calendar.getInstance();
+		
 	    String[] splitRefTimestamp = refTimestamp.split("_");
 	    int year = Integer.parseInt(splitRefTimestamp[0]);
 	    int month = Integer.parseInt(splitRefTimestamp[1])-1;
 	    int day = Integer.parseInt(splitRefTimestamp[2]);
 	    int hour = Integer.parseInt(splitRefTimestamp[3]);
 	    int minute = Integer.parseInt(splitRefTimestamp[4]);
-	    return new Date(year, month, day, hour, minute, 0);
+	    calendar.set(year, month, day, hour, minute);
+	    
+	    return calendar.getTime();
 	  }
 }

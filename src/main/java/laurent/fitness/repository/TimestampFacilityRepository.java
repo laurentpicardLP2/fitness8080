@@ -27,6 +27,8 @@ public interface TimestampFacilityRepository extends JpaRepository <TimestampFac
 	
 	@Query(value = "SELECT * FROM db_fitness.timestamp_facility WHERE seance_id_seance = ?1", nativeQuery = true)
 	List<TimestampFacility> findTimestampByIdSeance(int idItem);
+	
+	//SELECT * FROM db_fitness.timestamp_facility where date_of_timestamp like "3919-03-21 21:50:00";
 
 }
 
