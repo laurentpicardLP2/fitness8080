@@ -1,7 +1,9 @@
 package laurent.fitness.services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -30,8 +32,9 @@ public class FacilityAvailableAdaptaterServiceImpl implements FacilityAvailableA
 
 	
 	@Override
-	public List<FacilityAvailableAdaptater> getFacilitiesAvailable(String timestamp) {
+	public List<FacilityAvailableAdaptater> getFacilitiesAvailable(String timestampToString) {
 		// TODO Auto-generated method stub
+		
 		int availableFacilities = 0;
 		String nameFacilityCategory = "";
 		float priceFacilityCategory = 0f;
@@ -39,11 +42,12 @@ public class FacilityAvailableAdaptaterServiceImpl implements FacilityAvailableA
 		List<Facility> facilities = null;
 		List<FacilityCategory> facilityCategories = this.facilityCategoryRepo.findAll();
 		
+		
 		for (int i=0; i<facilityCategories.size(); i++) {
 			nameFacilityCategory = facilityCategories.get(i).getNameFacilityCategory();
 			priceFacilityCategory = facilityCategories.get(i).getPriceFacilityCategory();
-			availableFacilities = this.timestampFacilityRepo.findByFacilityCategoryCount(nameFacilityCategory, timestamp);
-			facilities = this.facilityRepo.findByFacilityAvailable(nameFacilityCategory, timestamp);
+			availableFacilities = this.timestampFacilityRepo.findByFacilityCategoryCount(nameFacilityCategory, timestampToString);
+			facilities = this.facilityRepo.findByFacilityAvailable(nameFacilityCategory, timestampToString);
 			facilitiesAvailableAdaptater.add(new FacilityAvailableAdaptater(nameFacilityCategory, priceFacilityCategory, availableFacilities, facilities));
 		}
 		return facilitiesAvailableAdaptater;

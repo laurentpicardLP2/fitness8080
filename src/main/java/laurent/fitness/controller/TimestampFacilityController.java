@@ -14,28 +14,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import laurent.fitness.services.ConvertTimeToStringService;
 import laurent.fitness.services.TimestampFacilityService;
 
 @RestController
 @RequestMapping("/timestampfacilityctrl")
 @CrossOrigin("http://localhost:4200")
 public class TimestampFacilityController {
-private TimestampFacilityService timestampFacilityService;
+	private TimestampFacilityService timestampFacilityService;
+	private ConvertTimeToStringService convertTimeToStringService;
 	
-	public TimestampFacilityController(TimestampFacilityService timestampFacilityService) {
+	public TimestampFacilityController(TimestampFacilityService timestampFacilityService,
+			ConvertTimeToStringService convertTimeToStringService) {
 		this.timestampFacilityService = timestampFacilityService;
+		this.convertTimeToStringService = convertTimeToStringService;
 	}
 	
 	//Add a new timestampFacility
-	@PostMapping("/addtimestampfacility/{idItem}/{refTimestamp}/{nameFacility}/{nameFacilityCategory}")
+	@PostMapping("/addtimestampfacility/{idItem}/{dateOfTimestamp}/{nameFacility}/{nameFacilityCategory}")
 	public ResponseEntity<?> addTimestampFacility(
 			@PathVariable int idItem,
-			@PathVariable String refTimestamp, 
+			@PathVariable Date dateOfTimestamp, 
 			@PathVariable String nameFacility, 
 			@PathVariable String nameFacilityCategory) {
 		try {
 		return ResponseEntity.status(HttpStatus.OK).body(
-				this.timestampFacilityService.saveNewTimestampFacility(idItem, refTimestamp, nameFacility, nameFacilityCategory));
+				this.timestampFacilityService.saveNewTimestampFacility(idItem, dateOfTimestamp, nameFacility, nameFacilityCategory));
 		
 		} catch(Exception e) {
 			
@@ -45,18 +49,18 @@ private TimestampFacilityService timestampFacilityService;
 	}
 	
 	//Check the quantity of available facilities for a timestamp and its category
-	@GetMapping("/availablefacilities/{facilityName}/{refTimestamp}")
-	public ResponseEntity<?> getQuantityAvailableFacilities(@PathVariable String facilityName, @PathVariable String refTimestamp) {
-		try {
-			int nbAvailableFacilities = this.timestampFacilityService.findByFacilityCategoryCount(facilityName, refTimestamp);
-		return ResponseEntity.status(HttpStatus.OK).body(null);
-		
-		} catch(Exception e) {
-			
-			System.out.println(e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
-		}			
-	}
+//	@GetMapping("/availablefacilities/{facilityName}/{dateOfTimestamp}")
+//	public ResponseEntity<?> getQuantityAvailableFacilities(@PathVariable String facilityName, @PathVariable Date dateOfTimestamp) {
+//		try {
+//			int nbAvailableFacilities = this.timestampFacilityService.findByFacilityCategoryCount(facilityName, this.convertTimeToStringService.getStringOfTimestamp(dateOfTimestamp));
+//		return ResponseEntity.status(HttpStatus.OK).body(null);
+//		
+//		} catch(Exception e) {
+//			
+//			System.out.println(e);
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
+//		}			
+//	}
 	
 	@DeleteMapping("/deletetimestampfacility/{idTimestampFacillity}")
 	public ResponseEntity<?> delTimestamp(@PathVariable String idTimestampFacillity){

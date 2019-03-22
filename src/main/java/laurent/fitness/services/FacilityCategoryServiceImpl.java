@@ -12,11 +12,11 @@ import laurent.fitness.repository.TimestampFacilityRepository;
 public class FacilityCategoryServiceImpl implements FacilityCategoryService {
 	
 	private FacilityCategoryRepository facilityCategoryRepo;
-	private TimestampFacilityRepository timestampFacilityRepo;
+	
 
-    public FacilityCategoryServiceImpl(FacilityCategoryRepository facilityCategoryRepo, TimestampFacilityRepository timestampFacilityRepo) {
+    public FacilityCategoryServiceImpl(FacilityCategoryRepository facilityCategoryRepo) {
         this.facilityCategoryRepo = facilityCategoryRepo;
-        this.timestampFacilityRepo = timestampFacilityRepo;
+       
     }
 
 	@Override

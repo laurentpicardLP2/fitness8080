@@ -37,7 +37,7 @@ public class FacilityCategoryControllerPostman {
 		List<FacilityAvailableAdaptater> listeFacilitiesAvailable = null;
 	
 		try {
-			listeFacilitiesAvailable = this.facilityAvailableAdaptaterService.getFacilitiesAvailable(timestamp);			
+			//listeFacilitiesAvailable = this.facilityAvailableAdaptaterService.getFacilitiesAvailable(timestamp);			
 
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

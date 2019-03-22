@@ -1,5 +1,6 @@
 package laurent.fitness.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,7 +22,7 @@ public interface TimestampFacilityRepository extends JpaRepository <TimestampFac
 	@Query(value = "SELECT (facility_category.quantity_facility_category) - "
 			+ " (SELECT COUNT(*) FROM timestamp_facility INNER JOIN facility_category ON "
 			+ " timestamp_facility.facility_category_id_facility_category = facility_category.id_facility_category "
-			+ "  WHERE facility_category.name_facility_category like %?1% AND timestamp_facility.ref_timestamp like %?2% ) "
+			+ "  WHERE facility_category.name_facility_category like %?1% AND timestamp_facility.date_of_timestamp like %?2% ) "
 			+ " FROM facility_category WHERE facility_category.name_facility_category like %?1%", nativeQuery = true)
 	int findByFacilityCategoryCount(String nameFacility, String timestamp);
 	

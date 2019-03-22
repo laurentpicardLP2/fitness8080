@@ -23,7 +23,7 @@ public class Item implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected int idItem;
 	
-	private String typeItem;
+	protected String typeItem;
 
 	protected float price;
 

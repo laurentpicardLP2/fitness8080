@@ -1,5 +1,6 @@
 package laurent.fitness.controller;
 
+import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import laurent.fitness.model.FacilityCategory;
 import laurent.fitness.model.adaptater.FacilityAvailableAdaptater;
+import laurent.fitness.services.ConvertTimeToStringService;
 import laurent.fitness.services.FacilityAvailableAdaptaterService;
 import laurent.fitness.services.FacilityCategoryService;
 import laurent.fitness.services.TimestampFacilityService;
@@ -27,24 +29,27 @@ public class FacilityCategoryController {
 	private FacilityCategoryService facilityCategoryService;
 	private TimestampFacilityService timestampFacilityService;
 	private FacilityAvailableAdaptaterService facilityAvailableAdaptaterService;
+	private ConvertTimeToStringService convertTimeToStringService;
 	
 	public FacilityCategoryController(
 			FacilityCategoryService facilityCategoryService,
 			TimestampFacilityService timestampFacilityService,
-			FacilityAvailableAdaptaterService facilityAvailableAdaptaterService
+			FacilityAvailableAdaptaterService facilityAvailableAdaptaterService,
+			ConvertTimeToStringService convertTimeToStringService
 			) {
 		this.facilityCategoryService = facilityCategoryService;
 		this.timestampFacilityService = timestampFacilityService;
 		this.facilityAvailableAdaptaterService = facilityAvailableAdaptaterService;
+		this.convertTimeToStringService = convertTimeToStringService;
 	}
 	
-	//Return the list of categories facilities available for a timestamp
+	//Retourne la liste des équipements disponibles pour la tranche horaire timestamp
 	@GetMapping("/getfacilitycategoriesavailable/{timestamp}")
-	public ResponseEntity<?> getFacilityCategoriesAvailable(@PathVariable String timestamp) {
+	public ResponseEntity<?> getFacilityCategoriesAvailable(@PathVariable Date timestamp) {
+		
 		List<FacilityAvailableAdaptater> listeFacilitiesAvailable = null;
 		try {
-			listeFacilitiesAvailable = this.facilityAvailableAdaptaterService.getFacilitiesAvailable(timestamp);			
-
+			listeFacilitiesAvailable = this.facilityAvailableAdaptaterService.getFacilitiesAvailable(this.convertTimeToStringService.getStringOfTimestamp(timestamp));			
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}

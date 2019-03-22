@@ -1,4 +1,5 @@
 package laurent.fitness.repository;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +19,7 @@ public interface FacilityRepository extends JpaRepository<Facility, Integer> {
 			+ " facility_category_id_facility_category = id_facility_category "
 			+ " WHERE name_facility_category like %?1% AND id_facility NOT IN "
 			+ " (SELECT facility_id_facility FROM timestamp_facility INNER JOIN facility_category ON "
-			+ " facility_category_id_facility_category = id_facility_category WHERE ref_timestamp like %?2% ) ", nativeQuery = true)
-	List<Facility> findByFacilityAvailable(String facilityName, String timestamp);
+			+ " facility_category_id_facility_category = id_facility_category WHERE date_of_timestamp like %?2% ) ", nativeQuery = true)
+	List<Facility> findByFacilityAvailable(String facilityName, String timestampToString);
 
 }
