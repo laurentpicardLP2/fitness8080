@@ -12,4 +12,6 @@ public List<Authority> getAllAuthorities();
 	public Authority findByUsername(String username);
 	
 	public void deleteAuthority(Authority authority); 
+	
+	public List<Authority >getAuthoritiesCustomer();
 }

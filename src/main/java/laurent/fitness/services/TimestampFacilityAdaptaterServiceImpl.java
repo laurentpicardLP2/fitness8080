@@ -69,6 +69,7 @@ public class TimestampFacilityAdaptaterServiceImpl implements TimestampFacilityA
 		List<TimestampFacility> timestampFacilities = this.timestampFacilityRepo.findTimestampByIdSeance(idItem);
 		for (TimestampFacility timestampFacility : timestampFacilities) {
 			dateOfTimestampStart = timestampFacility.getDateOfTimestamp();
+			//dateOfTimestampStart = new Date(dateOfTimestampStart.getTime() + 3600000);
 			dateOfTimestampEnd = new Date(dateOfTimestampStart.getTime() + 600000);
 			
 			

@@ -25,8 +25,6 @@ public class TimestampFacility implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private int idTimestampFacility;
 	
-	private String refTimestamp;
-	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateOfTimestamp;
 
@@ -52,9 +50,8 @@ public class TimestampFacility implements Serializable {
 	public TimestampFacility() {
 	}
 
-    public TimestampFacility(Seance seance, String refTimestamp, Facility facility, FacilityCategory facilityCategory, Date dateOfTimestamp) {
+    public TimestampFacility(Seance seance, Facility facility, FacilityCategory facilityCategory, Date dateOfTimestamp) {
     	this.seance = seance;
-		this.refTimestamp = refTimestamp;
 		this.facility = facility;
 		this.facilityCategory = facilityCategory;
 		this.dateOfTimestamp = dateOfTimestamp;
@@ -66,14 +63,6 @@ public class TimestampFacility implements Serializable {
 
 	public void setIdTimestampFacility(int idTimestampFacility) {
 		this.idTimestampFacility = idTimestampFacility;
-	}
-
-	public String getRefTimestamp() {
-		return this.refTimestamp;
-	}
-
-	public void setRefTimestamp(String refTimestamp) {
-		this.refTimestamp = refTimestamp;
 	}
 	
 	public Date getDateOfTimestamp() {

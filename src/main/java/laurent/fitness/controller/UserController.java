@@ -154,10 +154,15 @@ public class UserController {
 		return ResponseEntity.ok(authority);
 	}
 	
-//	@GetMapping("/authorities")
-//	public List<Authority> getAllAuthorities() {
-//		return this.authorityService.getAllAuthorities();
-//	}
+	/**
+	 * retourne la liste des customer (username + authority). 
+	 * Permet lors du signup d'un nouvel utilisateur de contrôler l'unicité du champ username
+	 * @return
+	 */
+	@GetMapping("/authorities")
+	public List<Authority> getAllAuthorities() {
+		return this.authorityService.getAllAuthorities();
+	}
 	
 	
 	//temporary login process 

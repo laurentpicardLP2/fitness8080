@@ -40,4 +40,10 @@ public class AuthorityServiceImpl implements AuthorityService {
 		return this.authorityRepo.findByUsername(username);
 	}
 
+	@Override
+	public List<Authority> getAuthoritiesCustomer() {
+		// TODO Auto-generated method stub
+		return this.authorityRepo.findAllAuthoritiesCustomer();
+	}
+
 }

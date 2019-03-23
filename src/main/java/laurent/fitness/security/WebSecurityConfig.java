@@ -119,10 +119,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().sameOrigin() //Pour activer la base de donnees MySQL
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/").permitAll()
                 .antMatchers("/postman/**").permitAll()
                 .antMatchers("/userctrl/newcustomer").permitAll()
                 .antMatchers("/userctrl/login").permitAll()
+                .antMatchers("/userctrl/authorities").permitAll()
                 .antMatchers("/userctrl/authority/**").hasAnyRole("ADMIN", "MANAGER", "CUSTOMER")
                 .antMatchers("/commandctrl/**").hasAnyRole("ADMIN", "MANAGER", "CUSTOMER")
                 .antMatchers("/seancectrl/**").hasAnyRole("ADMIN", "MANAGER", "CUSTOMER")
@@ -136,7 +137,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(SIGN_UP_URLS).permitAll()
                 .anyRequest().authenticated();
 
-       // http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         
     }
    }
